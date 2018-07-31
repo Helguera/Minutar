@@ -16,8 +16,10 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JSplitPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.discovery.NativeDiscovery;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
@@ -66,6 +68,8 @@ public class prueba implements Runnable {
         final PlayerControlsPanel controlsPanel = new PlayerControlsPanel(embeddedMediaPlayer);
         Controles controles = new Controles(embeddedMediaPlayer);
         botones botones = new botones();
+        Tabla tabla = new Tabla();
+        JSplitPane split = new JSplitPane();
 
         mainFrame = new JFrame();
 
@@ -75,14 +79,19 @@ public class prueba implements Runnable {
         mainFrame.add(videoSurface, BorderLayout.CENTER);
         mainFrame.add(controles, BorderLayout.SOUTH);
         mainFrame.add(botones, BorderLayout.EAST);
+        mainFrame.add(tabla, BorderLayout.WEST);
 
         //mainFrame.add(videoAdjustPanel, BorderLayout.EAST);
 
-        //create a button which will hide the panel when clicked.
+        DefaultTableModel model = (DefaultTableModel) tabla.getM;
+        //model.addRow(new Object[]{"Column 1", "Column 2", "Column 3"});
+        
+        
+        
         mainFrame.pack();
         mainFrame.setVisible(true);
 
-        embeddedMediaPlayer.playMedia("C:\\Users\\Sociograph\\Desktop\\23 julio_Gafa 14_Grupo 3\\MOVI0000.avi");
+        //embeddedMediaPlayer.playMedia("C:\\Users\\Sociograph\\Desktop\\23 julio_Gafa 14_Grupo 3\\MOVI0000.avi");
     }
 
 }
