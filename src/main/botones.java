@@ -5,10 +5,12 @@
  */
 package main;
 
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
+import java.awt.Component;
+import static java.awt.Label.CENTER;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
-import javax.swing.JComponent;
+import javax.swing.JLabel;
 
 /**
  *
@@ -21,18 +23,58 @@ public class botones extends javax.swing.JPanel {
      */
     public botones() {
         initComponents();
-        
-       
+        int cont = 1;
+        for (int i = 0; i < 60; i++) {
 
-        for (int i = 0; i < 15; i++) {
-            JButton boton = new JButton();
-            boton.setText("Boton " + i);
-            boton.setVisible(true);
-            jPanel4.add(boton);
-            jPanel4.updateUI();
+            switch (i % 3) {
+                case 1:
+                    JLabel etiqueta = new JLabel();
+                    etiqueta.setText("Etiqueta " + cont);
+                    etiqueta.setHorizontalAlignment(JLabel.CENTER);
+                    etiqueta.setVisible(true);
+                    etiqueta.setName("Etiqueta" + i);
+                    jPanel4.add(etiqueta);
+                    jPanel4.updateUI();
+                    cont++;
+                    break;
+                case 0: {
+                    JButton boton = new JButton();
+                    boton.setText("Inicio");
+                    boton.setVisible(true);
+                    boton.setName("Boton" + i);
+                    boton.addActionListener((ActionEvent e) -> {
+                        Component comp[] = jPanel4.getComponents();
+                        int pos = 0;
+                        for (int j = 0; j < comp.length; j++) {
+                            if (e.getSource().hashCode() == (comp[j].hashCode())) {
+                                pos = j;
+                            }
+                        }
+                        comp[pos + 2].setEnabled(true);
+                        comp[pos].setEnabled(false);
+                      
+
+                    });
+
+                    jPanel4.add(boton);
+                    jPanel4.updateUI();
+
+                    break;
+                }
+                default: {
+                    JButton boton = new JButton();
+                    boton.setText("Fin");
+                    boton.setVisible(true);
+                    boton.setEnabled(false);
+                    boton.setName("Boton" + i);
+                    jPanel4.add(boton);
+                    jPanel4.updateUI();
+                    break;
+                }
+            }
         }
         jPanel4.setVisible(true);
-        
+
     }
 
     /**
@@ -98,4 +140,5 @@ public class botones extends javax.swing.JPanel {
     private javax.swing.JScrollPane scroll;
     private javax.swing.JTabbedPane tabbed;
     // End of variables declaration//GEN-END:variables
+
 }
