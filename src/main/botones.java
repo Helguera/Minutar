@@ -24,14 +24,14 @@ public class botones extends javax.swing.JPanel {
         
        
 
-        /*for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 15; i++) {
             JButton boton = new JButton();
             boton.setText("Boton " + i);
             boton.setVisible(true);
-            pnlbotones.add(boton);
-            pnlbotones.updateUI();
+            jPanel4.add(boton);
+            jPanel4.updateUI();
         }
-        pnlbotones.setVisible(true);*/
+        jPanel4.setVisible(true);
         
     }
 
@@ -50,20 +50,12 @@ public class botones extends javax.swing.JPanel {
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTree1 = new javax.swing.JTree();
+        scroll = new javax.swing.JScrollPane();
+        jPanel4 = new javax.swing.JPanel();
 
         setLayout(new java.awt.BorderLayout());
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 395, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 299, Short.MAX_VALUE)
-        );
-
+        jPanel1.setLayout(new java.awt.GridLayout(0, 2));
         tabbed.addTab("Elementos", jPanel1);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -87,6 +79,11 @@ public class botones extends javax.swing.JPanel {
 
         tabbed.addTab("Ficheros", jPanel3);
 
+        jPanel4.setLayout(new java.awt.GridLayout(0, 3));
+        scroll.setViewportView(jPanel4);
+
+        tabbed.addTab("Scroll", scroll);
+
         add(tabbed, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -95,8 +92,10 @@ public class botones extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTree jTree1;
+    private javax.swing.JScrollPane scroll;
     private javax.swing.JTabbedPane tabbed;
     // End of variables declaration//GEN-END:variables
 }
