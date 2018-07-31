@@ -23,6 +23,7 @@ public class botones extends javax.swing.JPanel {
     /**
      * Creates new form botones
      */
+    @SuppressWarnings("empty-statement")
     public botones(Controlador controlador) {
         this.controlador = controlador;
         initComponents();
@@ -55,7 +56,9 @@ public class botones extends javax.swing.JPanel {
                         }
                         comp[pos + 2].setEnabled(true);
                         comp[pos].setEnabled(false);
-                        controlador.addRow(new Object[]{"156", "0:00:00", "0:01:56", "prueba desde boton"});
+                     
+                        controlador.addRow(new Object[]{controlador.getNumLinea(), controlador.getTime(), "", ""});
+                        controlador.incrementaNumLinea();
                     });
 
                     jPanel4.add(boton);
@@ -69,6 +72,22 @@ public class botones extends javax.swing.JPanel {
                     boton.setVisible(true);
                     boton.setEnabled(false);
                     boton.setName("Boton" + i);
+                      boton.addActionListener((ActionEvent e) -> {
+                        Component comp[] = jPanel4.getComponents();
+                        int pos = 0;
+                        for (int j = 0; j < comp.length; j++) {
+                            if (e.getSource().hashCode() == (comp[j].hashCode())) {
+                                pos = j;
+                            }
+                        }
+                        comp[pos - 2].setEnabled(true);
+                        comp[pos].setEnabled(false);
+                        Component[] filas=controlador.getRows();
+                        //for (int k=0;k<filas.length;k++){
+                            System.out.println(filas[controlador.getNumLinea()]);
+                        //}
+                    });
+                    
                     jPanel4.add(boton);
                     jPanel4.updateUI();
                     break;

@@ -36,7 +36,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JProgressBar;
 import javax.swing.JSlider;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
