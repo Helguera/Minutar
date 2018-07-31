@@ -5,12 +5,18 @@
  */
 package main;
 
+import Clases.Controles;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.discovery.NativeDiscovery;
@@ -23,13 +29,21 @@ import uk.co.caprica.vlcj.test.basic.PlayerVideoAdjustPanel;
  *
  * @author Sociograph
  */
-public class prueba {
-    public static void main (String args[]){
+public class prueba implements Runnable {
+
+    private JFrame mainFrame;
+
+    public static void main(String args[]) {
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
         } catch (Exception e) {
             System.out.println("UIManager Exception : " + e);
         }
+        SwingUtilities.invokeLater(new prueba());
+
+    }
+
+    public void run() {
         boolean found = new NativeDiscovery().discover();
         EmbeddedMediaPlayerComponent mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
         EmbeddedMediaPlayer embeddedMediaPlayer = mediaPlayerComponent.getMediaPlayer();
@@ -50,16 +64,18 @@ public class prueba {
         embeddedMediaPlayer.setPlaySubItems(true);
 
         final PlayerControlsPanel controlsPanel = new PlayerControlsPanel(embeddedMediaPlayer);
-        PlayerVideoAdjustPanel videoAdjustPanel = new PlayerVideoAdjustPanel(embeddedMediaPlayer);
+        Controles controles = new Controles(embeddedMediaPlayer);
         botones botones = new botones();
 
-//            mediaPlayerComponent.getMediaPlayer().playMedia(Constant.PATH_ROOT + Constant.PATH_MEDIA + "tmp.mp4");
-        JFrame mainFrame = new JFrame();
+        mainFrame = new JFrame();
+
+        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setLayout(new BorderLayout());
         mainFrame.setBackground(Color.black);
         mainFrame.add(videoSurface, BorderLayout.CENTER);
-        mainFrame.add(controlsPanel, BorderLayout.SOUTH);
+        mainFrame.add(controles, BorderLayout.SOUTH);
         mainFrame.add(botones, BorderLayout.EAST);
+
         //mainFrame.add(videoAdjustPanel, BorderLayout.EAST);
 
         //create a button which will hide the panel when clicked.
@@ -68,4 +84,5 @@ public class prueba {
 
         embeddedMediaPlayer.playMedia("C:\\Users\\Sociograph\\Desktop\\23 julio_Gafa 14_Grupo 3\\MOVI0000.avi");
     }
+
 }

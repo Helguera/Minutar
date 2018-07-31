@@ -5,6 +5,11 @@
  */
 package main;
 
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+
 /**
  *
  * @author Sociograph
@@ -16,6 +21,18 @@ public class botones extends javax.swing.JPanel {
      */
     public botones() {
         initComponents();
+        
+       
+
+        /*for (int i = 0; i < 50; i++) {
+            JButton boton = new JButton();
+            boton.setText("Boton " + i);
+            boton.setVisible(true);
+            pnlbotones.add(boton);
+            pnlbotones.updateUI();
+        }
+        pnlbotones.setVisible(true);*/
+        
     }
 
     /**
@@ -27,29 +44,59 @@ public class botones extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jScrollBar1 = new javax.swing.JScrollBar();
+        tabbed = new javax.swing.JTabbedPane();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jTree1 = new javax.swing.JTree();
 
         setLayout(new java.awt.BorderLayout());
 
-        jButton1.setText("jButton1");
-        add(jButton1, java.awt.BorderLayout.PAGE_END);
-        add(jScrollBar1, java.awt.BorderLayout.LINE_START);
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 395, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 299, Short.MAX_VALUE)
+        );
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        tabbed.addTab("Elementos", jPanel1);
 
-        add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 395, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 299, Short.MAX_VALUE)
+        );
+
+        tabbed.addTab("Zonas", jPanel2);
+
+        jPanel3.setLayout(new java.awt.BorderLayout());
+
+        jScrollPane1.setViewportView(jTree1);
+
+        jPanel3.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+        tabbed.addTab("Ficheros", jPanel3);
+
+        add(tabbed, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JScrollBar jScrollBar1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTree jTree1;
+    private javax.swing.JTabbedPane tabbed;
     // End of variables declaration//GEN-END:variables
 }
