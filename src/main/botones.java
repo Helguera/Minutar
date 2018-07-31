@@ -17,11 +17,14 @@ import javax.swing.JLabel;
  * @author Sociograph
  */
 public class botones extends javax.swing.JPanel {
+    
+    private Controlador controlador;
 
     /**
      * Creates new form botones
      */
-    public botones() {
+    public botones(Controlador controlador) {
+        this.controlador = controlador;
         initComponents();
         int cont = 1;
         for (int i = 0; i < 60; i++) {
@@ -52,8 +55,7 @@ public class botones extends javax.swing.JPanel {
                         }
                         comp[pos + 2].setEnabled(true);
                         comp[pos].setEnabled(false);
-                      
-
+                        //main.setText();
                     });
 
                     jPanel4.add(boton);
@@ -89,6 +91,7 @@ public class botones extends javax.swing.JPanel {
         tabbed = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTree1 = new javax.swing.JTree();
@@ -100,15 +103,28 @@ public class botones extends javax.swing.JPanel {
         jPanel1.setLayout(new java.awt.GridLayout(0, 2));
         tabbed.addTab("Elementos", jPanel1);
 
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 395, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(169, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(153, 153, 153))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 299, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(122, 122, 122)
+                .addComponent(jButton1)
+                .addContainerGap(126, Short.MAX_VALUE))
         );
 
         tabbed.addTab("Zonas", jPanel2);
@@ -129,8 +145,14 @@ public class botones extends javax.swing.JPanel {
         add(tabbed, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

@@ -16,7 +16,6 @@
  *
  * Copyright 2009-2018 Caprica Software Limited.
  */
-
 package Clases;
 
 import java.awt.BorderLayout;
@@ -37,6 +36,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.JSlider;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
@@ -106,12 +106,11 @@ public class Controles extends JPanel {
     private void createControls() {
         timeLabel = new JLabel("hh:mm:ss");
 
-        // positionProgressBar = new JProgressBar();
-        // positionProgressBar.setMinimum(0);
-        // positionProgressBar.setMaximum(1000);
-        // positionProgressBar.setValue(0);
-        // positionProgressBar.setToolTipText("Time");
-
+        //positionProgressBar = new JProgressBar();
+        //positionProgressBar.setMinimum(0);
+        //positionProgressBar.setMaximum(1000);
+        //positionProgressBar.setValue(0);
+        //positionProgressBar.setToolTipText("Time");
         positionSlider = new JSlider();
         positionSlider.setMinimum(0);
         positionSlider.setMaximum(1000);
@@ -243,34 +242,33 @@ public class Controles extends JPanel {
      * Broken out position setting, handles updating mediaPlayer
      */
     private void setSliderBasedPosition() {
-        if(!mediaPlayer.isSeekable()) {
+        if (!mediaPlayer.isSeekable()) {
             return;
         }
         float positionValue = positionSlider.getValue() / 1000.0f;
         // Avoid end of file freeze-up
-        if(positionValue > 0.99f) {
+        if (positionValue > 0.99f) {
             positionValue = 0.99f;
         }
         mediaPlayer.setPosition(positionValue);
     }
 
     private void updateUIState() {
-        if(!mediaPlayer.isPlaying()) {
+        if (!mediaPlayer.isPlaying()) {
             // Resume play or play a few frames then pause to show current position in video
             mediaPlayer.play();
-            if(!mousePressedPlaying) {
+            if (!mousePressedPlaying) {
                 try {
                     // Half a second probably gets an iframe
                     Thread.sleep(500);
-                }
-                catch(InterruptedException e) {
+                } catch (InterruptedException e) {
                     // Don't care if unblocked early
                 }
                 mediaPlayer.pause();
             }
         }
         long time = mediaPlayer.getTime();
-        int position = (int)(mediaPlayer.getPosition() * 1000.0f);
+        int position = (int) (mediaPlayer.getPosition() * 1000.0f);
         int chapter = mediaPlayer.getChapter();
         int chapterCount = mediaPlayer.getChapterCount();
         updateTime(time);
@@ -280,7 +278,7 @@ public class Controles extends JPanel {
 
     private void skip(int skipTime) {
         // Only skip time if can handle time setting
-        if(mediaPlayer.getLength() > 0) {
+        if (mediaPlayer.getLength() > 0) {
             mediaPlayer.skip(skipTime);
             updateUIState();
         }
@@ -297,11 +295,10 @@ public class Controles extends JPanel {
         positionSlider.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                if(mediaPlayer.isPlaying()) {
+                if (mediaPlayer.isPlaying()) {
                     mousePressedPlaying = true;
                     mediaPlayer.pause();
-                }
-                else {
+                } else {
                     mousePressedPlaying = false;
                 }
                 setSliderBasedPosition();
@@ -373,7 +370,7 @@ public class Controles extends JPanel {
         volumeSlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                JSlider source = (JSlider)e.getSource();
+                JSlider source = (JSlider) e.getSource();
                 // if(!source.getValueIsAdjusting()) {
                 mediaPlayer.setVolume(source.getValue());
                 // }
@@ -391,7 +388,7 @@ public class Controles extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 mediaPlayer.enableOverlay(false);
-                if(JFileChooser.APPROVE_OPTION == fileChooser.showOpenDialog(Controles.this)) {
+                if (JFileChooser.APPROVE_OPTION == fileChooser.showOpenDialog(Controles.this)) {
                     mediaPlayer.playMedia(fileChooser.getSelectedFile().getAbsolutePath());
                 }
                 mediaPlayer.enableOverlay(true);
@@ -403,7 +400,7 @@ public class Controles extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 mediaPlayer.enableOverlay(false);
                 String mediaUrl = JOptionPane.showInputDialog(Controles.this, "Enter a media URL", "Connect to media", JOptionPane.QUESTION_MESSAGE);
-                if(mediaUrl != null && mediaUrl.length() > 0) {
+                if (mediaUrl != null && mediaUrl.length() > 0) {
                     mediaPlayer.playMedia(mediaUrl);
                 }
                 mediaPlayer.enableOverlay(true);
@@ -421,13 +418,12 @@ public class Controles extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int spu = mediaPlayer.getSpu();
-                if(spu > -1) {
-                    spu ++ ;
-                    if(spu > mediaPlayer.getSpuCount()) {
+                if (spu > -1) {
+                    spu++;
+                    if (spu > mediaPlayer.getSpuCount()) {
                         spu = -1;
                     }
-                }
-                else {
+                } else {
                     spu = 0;
                 }
                 mediaPlayer.setSpu(spu);
@@ -446,7 +442,7 @@ public class Controles extends JPanel {
         @Override
         public void run() {
             final long time = mediaPlayer.getTime();
-            final int position = (int)(mediaPlayer.getPosition() * 1000.0f);
+            final int position = (int) (mediaPlayer.getPosition() * 1000.0f);
             final int chapter = mediaPlayer.getChapter();
             final int chapterCount = mediaPlayer.getChapterCount();
 
@@ -455,7 +451,7 @@ public class Controles extends JPanel {
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
-                    if(mediaPlayer.isPlaying()) {
+                    if (mediaPlayer.isPlaying()) {
                         updateTime(time);
                         updatePosition(position);
                         updateChapter(chapter, chapterCount);
@@ -484,5 +480,9 @@ public class Controles extends JPanel {
 
     private void updateVolume(int value) {
         volumeSlider.setValue(value);
+    }
+    
+    public long getTime(){
+        return mediaPlayer.getTime();
     }
 }
