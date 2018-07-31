@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import static javafx.util.Duration.millis;
 import javax.swing.JFrame;
+import javax.swing.JSplitPane;
 import javax.swing.UIManager;
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.discovery.NativeDiscovery;
@@ -33,6 +34,8 @@ public class Controlador {
     private Tabla tabla;
     private botones botones;
     private Controlador controlador;
+    private JSplitPane split;
+    
     private int numLinea=1;
 
     public int getNumLinea() {
@@ -77,20 +80,25 @@ public class Controlador {
         botones = new botones(this);
         tabla = new Tabla();
         mainFrame = new JFrame();
+        split = new JSplitPane();
+        split.setResizeWeight(0.9);
+        split.setRightComponent(botones);
+        split.setLeftComponent(tabla);
+        
 
         //Colocar las ventanas en el frame original con el border layout
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setLayout(new BorderLayout());
         mainFrame.setBackground(Color.black);
-        mainFrame.add(videoSurface, BorderLayout.CENTER);
+        mainFrame.add(videoSurface, BorderLayout.NORTH);
         mainFrame.add(controles, BorderLayout.SOUTH);
-        mainFrame.add(botones, BorderLayout.EAST);
-        mainFrame.add(tabla, BorderLayout.WEST);
+        mainFrame.add(split, BorderLayout.CENTER);
+       // mainFrame.add(botones, BorderLayout.EAST);
+        //mainFrame.add(tabla, BorderLayout.WEST);
+        
 
-        /*tabla.setRow(new Object[]{"1", "0:00:00", "0:01:56", "Etiqueta info"});
-        tabla.setRow(new Object[]{"2", "0:00:00", "0:01:57", "Etiqueta info"});
-        tabla.setRow(new Object[]{"3", "0:00:00", "0:01:58", "Etiqueta info"});
-        tabla.setRow(new Object[]{"4", "0:00:00", "0:01:59", "Etiqueta info"});*/
+        //tabla.setRow(new Object[]{"1", "0:00:00", "0:01:56", "Etiqueta info"});
+
 
        
 
@@ -98,7 +106,7 @@ public class Controlador {
         mainFrame.setVisible(true);
 
         //embeddedMediaPlayer.playMedia("C:\\Users\\Sociograph\\Desktop\\23 julio_Gafa 14_Grupo 3\\MOVI0000.avi");
-        embeddedMediaPlayer.playMedia("C:\\Users\\Sociograph\\Downloads\\logo-nuevo-sociograph-min-1024x238.png");
+        embeddedMediaPlayer.playMedia("images/logo.png");
 
     }
 
