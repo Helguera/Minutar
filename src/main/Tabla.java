@@ -85,9 +85,9 @@ public class Tabla extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tabla);
         tabla.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         if (tabla.getColumnModel().getColumnCount() > 0) {
-            tabla.getColumnModel().getColumn(0).setMinWidth(25);
-            tabla.getColumnModel().getColumn(0).setPreferredWidth(25);
-            tabla.getColumnModel().getColumn(0).setMaxWidth(25);
+            tabla.getColumnModel().getColumn(0).setMinWidth(35);
+            tabla.getColumnModel().getColumn(0).setPreferredWidth(35);
+            tabla.getColumnModel().getColumn(0).setMaxWidth(35);
             tabla.getColumnModel().getColumn(0).setCellRenderer(null);
             tabla.getColumnModel().getColumn(1).setMinWidth(70);
             tabla.getColumnModel().getColumn(1).setPreferredWidth(70);

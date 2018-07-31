@@ -55,7 +55,7 @@ public class botones extends javax.swing.JPanel {
                         }
                         comp[pos + 2].setEnabled(true);
                         comp[pos].setEnabled(false);
-                        //main.setText();
+                        controlador.addRow(new Object[]{"156", "0:00:00", "0:01:56", "prueba desde boton"});
                     });
 
                     jPanel4.add(boton);
