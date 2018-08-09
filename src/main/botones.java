@@ -45,8 +45,13 @@ public class botones extends javax.swing.JPanel {
         zonas = controlador.getZonas();
 
         initComponents();
-//        tabbed.removeAll();
-        tabbed.addTab("Configuracion", pnlConfig);
+        tabbed.removeTabAt(1);
+        tabbed.removeTabAt(1);
+        tabbed.removeTabAt(1);
+        tabbed.removeTabAt(1);
+        tabbed.removeTabAt(1);
+        tabbed.removeTabAt(1);
+        //tabbed.addTab("Configuracion", pnlConfig);
 
         //Crea boton y etiqueta por cada elemento leido del txt
         cargaElementos();

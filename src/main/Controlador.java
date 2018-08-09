@@ -93,12 +93,15 @@ public class Controlador {
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException e) {
             System.out.println("UIManager Exception : " + e);
         }
+        
+        
+                
 
         elementos = new ArrayList<>();
         zonas = new ArrayList<>();
 
         leeElementos();
-        //leeZonas();
+        leeZonas();
         //leePersonajes();
         //leeTramas();
         //leeSecuencias();
@@ -132,8 +135,10 @@ public class Controlador {
         tabla_zonas = new TablaElemZon(this);
         tabla_personajes = new TablaPerTram(this);
         tabla_tramas = new TablaPerTram(this);
+        tabla_tramas.cambiaTextoColumna();
         tabla_secuencias = new TablaSecEsc(this);
         tabla_escenas = new TablaSecEsc(this);
+        tabla_escenas.cambiaTextoColumna();
 
         mainFrame = new JFrame();
         split = new JSplitPane();

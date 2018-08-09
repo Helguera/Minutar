@@ -17,6 +17,9 @@ import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -72,7 +75,7 @@ public class TablaSecEsc extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Nº", "Inicio"
+                "Nº", "Secuencia"
             }
         ) {
             Class[] types = new Class [] {
@@ -99,9 +102,6 @@ public class TablaSecEsc extends javax.swing.JPanel {
             tabla.getColumnModel().getColumn(0).setMinWidth(35);
             tabla.getColumnModel().getColumn(0).setPreferredWidth(35);
             tabla.getColumnModel().getColumn(0).setMaxWidth(35);
-            tabla.getColumnModel().getColumn(1).setMinWidth(70);
-            tabla.getColumnModel().getColumn(1).setPreferredWidth(70);
-            tabla.getColumnModel().getColumn(1).setMaxWidth(70);
         }
 
         add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -292,5 +292,12 @@ public class TablaSecEsc extends javax.swing.JPanel {
     public JTable getTabla() {
         return tabla;
     }
-
+    
+    public void cambiaTextoColumna() {
+        JTableHeader th = tabla.getTableHeader();
+        TableColumnModel tcm = th.getColumnModel();
+        TableColumn tc = tcm.getColumn(1);
+        tc.setHeaderValue("Escena");
+        th.repaint();
+    }
 }

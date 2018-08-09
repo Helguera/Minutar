@@ -17,6 +17,9 @@ import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -74,14 +77,14 @@ public class TablaPerTram extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Nº", "Inicio", "Fin", "Elemento", "Video"
+                "Nº", "Inicio", "Fin", "Personaje"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, true, true, true
+                false, true, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -107,9 +110,6 @@ public class TablaPerTram extends javax.swing.JPanel {
             tabla.getColumnModel().getColumn(2).setMinWidth(70);
             tabla.getColumnModel().getColumn(2).setPreferredWidth(70);
             tabla.getColumnModel().getColumn(2).setMaxWidth(70);
-            tabla.getColumnModel().getColumn(4).setMinWidth(80);
-            tabla.getColumnModel().getColumn(4).setPreferredWidth(80);
-            tabla.getColumnModel().getColumn(4).setMaxWidth(80);
         }
 
         add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -215,9 +215,8 @@ public class TablaPerTram extends javax.swing.JPanel {
 
             for (int i = 0; i < longitud; i++) {
                 String linea;
-                
-                //if ()
 
+                //if ()
                 //writer.println(model_elementos.getValueAt(i, 0) + "," + model_elementos.getValueAt(i, 1) + "," + model_elementos.getValueAt(i, 2) + "," + model_elementos.getValueAt(i, 3) + ",,," + model_zonas.getValueAt(i, 0) + "," + model_zonas.getValueAt(i, 1) + "," + model_zonas.getValueAt(i, 2) + "," + model_zonas.getValueAt(i, 3));
 
                 /*if (model_elementos.getRowCount() < longitud) {
@@ -299,6 +298,14 @@ public class TablaPerTram extends javax.swing.JPanel {
 
     public JTable getTabla() {
         return tabla;
+    }
+
+    public void cambiaTextoColumna() {
+        JTableHeader th = tabla.getTableHeader();
+        TableColumnModel tcm = th.getColumnModel();
+        TableColumn tc = tcm.getColumn(3);
+        tc.setHeaderValue("Trama");
+        th.repaint();
     }
 
 }
