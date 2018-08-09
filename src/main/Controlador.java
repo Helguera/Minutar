@@ -258,35 +258,36 @@ public class Controlador {
         return zonas;
     }
 
-    public void cambiaTabla(int i) {
+    public void cambiaTabla(String i) {
         try {
             switch (i) {
-                case 0:
-                    split.setLeftComponent(new JPanel());
-                    break;
-                case 1:
+               
+                case "Elementos":
                     split.setLeftComponent(tabla_elementos);
-                    tabla_activa = i;
+                   // tabla_activa = i;
                     break;
-                case 2:
+                case "Zonas":
                     split.setLeftComponent(tabla_zonas);
-                    tabla_activa = i;
+                  //  tabla_activa = i;
                     break;
-                case 3:
+                case "Personajes":
                     split.setLeftComponent(tabla_personajes);
-                    tabla_activa = i;
+                    //tabla_activa = i;
                     break;
-                case 4:
+                case "Tramas":
                     split.setLeftComponent(tabla_tramas);
-                    tabla_activa = i;
+                    //tabla_activa = i;
                     break;
-                case 5:
+                case "Secuencias":
                     split.setLeftComponent(tabla_secuencias);
-                    tabla_activa = i;
+                    //tabla_activa = i;
                     break;
-                case 6:
+                case "Escenas":
                     split.setLeftComponent(tabla_escenas);
-                    tabla_activa = i;
+                    //tabla_activa = i;
+                    break;
+                default:
+                    split.setLeftComponent(new JPanel());
                     break;
             }
         } catch (Exception e) {
