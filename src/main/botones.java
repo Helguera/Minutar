@@ -224,28 +224,17 @@ public class botones extends javax.swing.JPanel {
 
         chk_elementos.setSelected(false);
         chk_zonas.setSelected(false);
-        chk_escenas.setSelected(true);
+        chk_personajes.setSelected(true);
         chk_tramas.setSelected(true);
         chk_secuencias.setSelected(true);
-        chk_personajes.setSelected(true);
+        chk_escenas.setSelected(true);
+
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void tabbedStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tabbedStateChanged
         // TODO add your handling code here:
-        try {
-            switch (tabbed.getSelectedIndex()) {
-                case 0:
-                    controlador.muestraTablaElementos();
-                    break;
-                case 1:
-                    controlador.muestraTablaZonas();
-                    break;
-            }
-        } catch (Exception e) {
-
-        }
-
+        controlador.cambiaTabla(tabbed.getSelectedIndex());
     }//GEN-LAST:event_tabbedStateChanged
 
     private void chk_zonasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_zonasActionPerformed
@@ -264,7 +253,6 @@ public class botones extends javax.swing.JPanel {
         // TODO add your handling code here:
         //pollote
         chk_elementos.setSelected(true);
-
         chk_zonas.setSelected(true);
         chk_escenas.setSelected(false);
         chk_tramas.setSelected(false);

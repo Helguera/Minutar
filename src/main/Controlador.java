@@ -41,13 +41,19 @@ public class Controlador {
 
     private Controles controles;
     private JFrame mainFrame;
-    private Tabla tabla_elementos;
-    private Tabla tabla_zonas;
+
+    private TablaElemZon tabla_elementos;
+    private TablaElemZon tabla_zonas;
+    private TablaPerTram tabla_personajes;
+    private TablaPerTram tabla_tramas;
+    private TablaSecEsc tabla_secuencias;
+    private TablaSecEsc tabla_escenas;
+
     private botones botones;
     private JSplitPane split;
     private ArrayList<String> elementos;
     private ArrayList<String> zonas;
-    
+
     private int tabla_activa = 0;   // 0 si esta la de elementos, 1 si esta la de zonas
 
     private HashMap lineaBoton = new HashMap();
@@ -62,7 +68,7 @@ public class Controlador {
     public void setNumLinea(int numLineaElementos) {
         this.numLineaElementos = numLineaElementos;
     }
-    
+
     public int getNumLineaZonas() {
         return numLineaZonas;
     }
@@ -89,11 +95,15 @@ public class Controlador {
         }
 
         elementos = new ArrayList<>();
-        leeElementos();
         zonas = new ArrayList<>();
-        leeZonas();
 
-        //this.setExtendedState(MAXIMIZED_BOTH);
+        leeElementos();
+        //leeZonas();
+        //leePersonajes();
+        //leeTramas();
+        //leeSecuencias();
+        //leeEscenas();
+
         boolean found = new NativeDiscovery().discover();
         EmbeddedMediaPlayerComponent mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
         EmbeddedMediaPlayer embeddedMediaPlayer = mediaPlayerComponent.getMediaPlayer();
@@ -115,18 +125,21 @@ public class Controlador {
 
         //Creacion de las ventanas
         final PlayerControlsPanel controlsPanel = new PlayerControlsPanel(embeddedMediaPlayer);
+
         controles = new Controles(embeddedMediaPlayer);
         botones = new botones(this);
-        tabla_elementos = new Tabla(this);
-        tabla_zonas = new Tabla(this);
+        tabla_elementos = new TablaElemZon(this);
+        tabla_zonas = new TablaElemZon(this);
+        tabla_personajes = new TablaPerTram(this);
+        tabla_tramas = new TablaPerTram(this);
+        tabla_secuencias = new TablaSecEsc(this);
+        tabla_escenas = new TablaSecEsc(this);
+
         mainFrame = new JFrame();
         split = new JSplitPane();
         split.setResizeWeight(0.9);
         split.setRightComponent(botones);
         split.setLeftComponent(new JPanel());
-
-        
-        
 
         //Colocar las ventanas en el frame original con el border layout
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -144,7 +157,7 @@ public class Controlador {
 
         //embeddedMediaPlayer.playMedia("C:\\Users\\Sociograph\\Desktop\\23 julio_Gafa 14_Grupo 3\\MOVI0000.avi");
         embeddedMediaPlayer.playMedia("images/logo.png");
-        
+
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         mainFrame.setVisible(true);
@@ -165,8 +178,8 @@ public class Controlador {
                 - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(tiempo)));
         return format;
     }
-    
-    public String getVideoName(){
+
+    public String getVideoName() {
         return controles.getVideoName();
     }
 
@@ -191,22 +204,21 @@ public class Controlador {
     public void incrementaNumLineaElementos() {
         this.numLineaElementos++;
     }
-    
-    public void decrementaNumLineaElementos(){
+
+    public void decrementaNumLineaElementos() {
         this.numLineaElementos--;
     }
-    
-    public void decrementaNumLineaZonas(){
+
+    public void decrementaNumLineaZonas() {
         this.numLineaZonas--;
     }
-    
-    
-     public void incrementaNumLineaZonas() {
+
+    public void incrementaNumLineaZonas() {
         this.numLineaZonas++;
     }
 
     private void leeElementos() {
-        String fichero = "C:\\Users\\Practicas\\Desktop\\elementos.txt";
+        String fichero = "C:\\Users\\Sociograph\\Desktop\\elementos.txt";
         try {
 
             FileReader fr = new FileReader(fichero);
@@ -223,7 +235,7 @@ public class Controlador {
     }
 
     private void leeZonas() {
-        String fichero = "C:\\Users\\Practicas\\Desktop\\zonas.txt";
+        String fichero = "C:\\Users\\Sociograph\\Desktop\\zonas.txt";
         try {
             FileReader fr = new FileReader(fichero);
             BufferedReader br = new BufferedReader(fr);
@@ -246,6 +258,42 @@ public class Controlador {
         return zonas;
     }
 
+    public void cambiaTabla(int i) {
+        try {
+            switch (i) {
+                case 0:
+                    split.setLeftComponent(new JPanel());
+                    break;
+                case 1:
+                    split.setLeftComponent(tabla_elementos);
+                    tabla_activa = i;
+                    break;
+                case 2:
+                    split.setLeftComponent(tabla_zonas);
+                    tabla_activa = i;
+                    break;
+                case 3:
+                    split.setLeftComponent(tabla_personajes);
+                    tabla_activa = i;
+                    break;
+                case 4:
+                    split.setLeftComponent(tabla_tramas);
+                    tabla_activa = i;
+                    break;
+                case 5:
+                    split.setLeftComponent(tabla_secuencias);
+                    tabla_activa = i;
+                    break;
+                case 6:
+                    split.setLeftComponent(tabla_escenas);
+                    tabla_activa = i;
+                    break;
+            }
+        } catch (Exception e) {
+
+        }
+    }
+
     public void muestraTablaElementos() {
         split.setLeftComponent(tabla_elementos);
         tabla_activa = 0;
@@ -255,25 +303,41 @@ public class Controlador {
         split.setLeftComponent(tabla_zonas);
         tabla_activa = 1;
     }
-    
-    public int getTablaActiva(){
+
+    public int getTablaActiva() {
         return tabla_activa;
     }
-    
-    public void setFinElemento(int linea){
+
+    public void setFinElemento(int linea) {
         tabla_elementos.setFinElemento(linea);
     }
-    
-    public void setFinZonas(int linea){
+
+    public void setFinZonas(int linea) {
         tabla_zonas.setFinElemento(linea);
     }
-   public JTable getTablaElementos(){
-       return tabla_elementos.getTabla();
-   }
-   
-   public JTable getTablaZonas(){
-       return tabla_zonas.getTabla();
-   }
+
+    public JTable getTablaElementos() {
+        return tabla_elementos.getTabla();
+    }
+
+    public JTable getTablaZonas() {
+        return tabla_zonas.getTabla();
+    }
+
+    private void leePersonajes() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void leeTramas() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void leeSecuencias() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
+    private void leeEscenas() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
 }

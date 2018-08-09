@@ -22,7 +22,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Sociograph
  */
-public class Tabla extends javax.swing.JPanel {
+public class TablaElemZon extends javax.swing.JPanel {
 
     private Controlador controlador;
     private JTable elementos;
@@ -31,7 +31,7 @@ public class Tabla extends javax.swing.JPanel {
     /**
      * Creates new form Tabla
      */
-    public Tabla(Controlador controlador) {
+    public TablaElemZon(Controlador controlador) {
         initComponents();
 
         this.controlador = controlador;
@@ -74,14 +74,14 @@ public class Tabla extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Nº", "Inicio", "Fin", "Elemento"
+                "Nº", "Inicio", "Fin", "Elemento", "Video"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, true, true
+                false, true, true, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -107,6 +107,9 @@ public class Tabla extends javax.swing.JPanel {
             tabla.getColumnModel().getColumn(2).setMinWidth(70);
             tabla.getColumnModel().getColumn(2).setPreferredWidth(70);
             tabla.getColumnModel().getColumn(2).setMaxWidth(70);
+            tabla.getColumnModel().getColumn(4).setMinWidth(80);
+            tabla.getColumnModel().getColumn(4).setPreferredWidth(80);
+            tabla.getColumnModel().getColumn(4).setMaxWidth(80);
         }
 
         add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -231,9 +234,9 @@ public class Tabla extends javax.swing.JPanel {
             writer.close();
 
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(Tabla.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TablaElemZon.class.getName()).log(Level.SEVERE, null, ex);
         } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(Tabla.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TablaElemZon.class.getName()).log(Level.SEVERE, null, ex);
         }
 
 
