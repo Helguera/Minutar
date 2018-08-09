@@ -53,6 +53,10 @@ public class Controlador {
     private JSplitPane split;
     private ArrayList<String> elementos;
     private ArrayList<String> zonas;
+    private ArrayList<String> personajes;
+    private ArrayList<String> tramas;
+    private ArrayList<String> secuencias;
+    private ArrayList<String> escenas;
 
     private int tabla_activa = 0;   // 0 si esta la de elementos, 1 si esta la de zonas
 
@@ -60,6 +64,10 @@ public class Controlador {
 
     private int numLineaElementos = 1;
     private int numLineaZonas = 1;
+    private int numLineaPersonajes = 1;
+    private int numLineaTramas = 1;
+    private int numLineaSecuencias = 1;
+    private int numLineaEscenas = 1;
 
     public int getNumLineaElementos() {
         return numLineaElementos;
@@ -75,6 +83,38 @@ public class Controlador {
 
     public void setNumLineaZonas(int numLineaZonas) {
         this.numLineaZonas = numLineaZonas;
+    }
+
+    public int getNumLineaPersonajes() {
+        return numLineaPersonajes;
+    }
+
+    public void setNumLineaPersonajes(int numLineaPersonajes) {
+        this.numLineaPersonajes = numLineaPersonajes;
+    }
+
+    public int getNumLineaTramas() {
+        return numLineaTramas;
+    }
+
+    public void setNumLineaTramas(int numLineaTramas) {
+        this.numLineaTramas = numLineaTramas;
+    }
+
+    public int getNumLineaSecuencias() {
+        return numLineaSecuencias;
+    }
+
+    public void setNumLineaSecuencias(int numLineaSecuencias) {
+        this.numLineaSecuencias = numLineaSecuencias;
+    }
+
+    public int getNumLineaEscenas() {
+        return numLineaEscenas;
+    }
+
+    public void setNumLineaEscenas(int numLineaEscenas) {
+        this.numLineaEscenas = numLineaEscenas;
     }
 
     public HashMap getLineaBoton() {
@@ -93,19 +133,20 @@ public class Controlador {
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException e) {
             System.out.println("UIManager Exception : " + e);
         }
-        
-        
-                
 
         elementos = new ArrayList<>();
         zonas = new ArrayList<>();
+        personajes = new ArrayList<>();
+        tramas = new ArrayList<>();
+        secuencias = new ArrayList<>();
+        escenas = new ArrayList<>();
 
         leeElementos();
         leeZonas();
-        //leePersonajes();
-        //leeTramas();
-        //leeSecuencias();
-        //leeEscenas();
+        leePersonajes();
+        leeTramas();
+        leeSecuencias();
+        leeEscenas();
 
         boolean found = new NativeDiscovery().discover();
         EmbeddedMediaPlayerComponent mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
@@ -197,6 +238,42 @@ public class Controlador {
         tabla_elementos.getRow(numFila, tiempo);
     }
 
+    public void addRowPersonajes(Object object) {
+        tabla_personajes.setRow(object);
+    }
+
+    public void getRowsPersonajes(int numFila, String tiempo) {
+        numFila = numFila - 2;
+        tabla_personajes.getRow(numFila, tiempo);
+    }
+
+    public void addRowTramas(Object object) {
+        tabla_tramas.setRow(object);
+    }
+
+    public void getRowsTramas(int numFila, String tiempo) {
+        numFila = numFila - 2;
+        tabla_tramas.getRow(numFila, tiempo);
+    }
+
+    public void addRowSecuencias(Object object) {
+        tabla_secuencias.setRow(object);
+    }
+
+    public void getRowsSecuencias(int numFila, String tiempo) {
+        numFila = numFila - 2;
+        tabla_secuencias.getRow(numFila, tiempo);
+    }
+
+    public void addRowEscenas(Object object) {
+        tabla_personajes.setRow(object);
+    }
+
+    public void getRowsEscenas(int numFila, String tiempo) {
+        numFila = numFila - 2;
+        tabla_personajes.getRow(numFila, tiempo);
+    }
+
     public void addRowZonas(Object object) {
         tabla_zonas.setRow(object);
     }
@@ -214,6 +291,38 @@ public class Controlador {
         this.numLineaElementos--;
     }
 
+    public void incrementaNumLineaPersonajes() {
+        this.numLineaPersonajes++;
+    }
+
+    public void decrementaNumLineaPersonajes() {
+        this.numLineaPersonajes--;
+    }
+
+    public void incrementaNumLineaTramas() {
+        this.numLineaTramas++;
+    }
+
+    public void decrementaNumLineaTramas() {
+        this.numLineaTramas--;
+    }
+
+    public void incrementaNumLineaSecuencias() {
+        this.numLineaSecuencias++;
+    }
+
+    public void decrementaNumLineaSecuencias() {
+        this.numLineaSecuencias--;
+    }
+
+    public void incrementaNumLineaEscenas() {
+        this.numLineaEscenas++;
+    }
+
+    public void decrementaNumLineaEscenas() {
+        this.numLineaEscenas--;
+    }
+
     public void decrementaNumLineaZonas() {
         this.numLineaZonas--;
     }
@@ -223,7 +332,7 @@ public class Controlador {
     }
 
     private void leeElementos() {
-        String fichero = "C:\\Users\\Sociograph\\Desktop\\elementos.txt";
+        String fichero = "C:\\Users\\Practicas\\Desktop\\elementos.txt";
         try {
 
             FileReader fr = new FileReader(fichero);
@@ -240,7 +349,7 @@ public class Controlador {
     }
 
     private void leeZonas() {
-        String fichero = "C:\\Users\\Sociograph\\Desktop\\zonas.txt";
+        String fichero = "C:\\Users\\Practicas\\Desktop\\zonas.txt";
         try {
             FileReader fr = new FileReader(fichero);
             BufferedReader br = new BufferedReader(fr);
@@ -255,8 +364,93 @@ public class Controlador {
         }
     }
 
+    private void leePersonajes() {
+        String fichero = "C:\\Users\\Practicas\\Desktop\\personajes.txt";
+        try {
+
+            FileReader fr = new FileReader(fichero);
+            BufferedReader br = new BufferedReader(fr);
+
+            String linea;
+            while ((linea = br.readLine()) != null) {
+
+                personajes.add(linea);
+            }
+            fr.close();
+        } catch (Exception e) {
+            System.out.println("Excepcion leyendo fichero " + fichero + ": " + e);
+        }
+    }
+
+    private void leeTramas() {
+        String fichero = "C:\\Users\\Practicas\\Desktop\\tramas.txt";
+        try {
+
+            FileReader fr = new FileReader(fichero);
+            BufferedReader br = new BufferedReader(fr);
+
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                tramas.add(linea);
+            }
+            fr.close();
+        } catch (Exception e) {
+            System.out.println("Excepcion leyendo fichero " + fichero + ": " + e);
+        }
+    }
+
+    private void leeSecuencias() {
+        String fichero = "C:\\Users\\Practicas\\Desktop\\secuencias.txt";
+        try {
+
+            FileReader fr = new FileReader(fichero);
+            BufferedReader br = new BufferedReader(fr);
+
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                secuencias.add(linea);
+            }
+            fr.close();
+        } catch (Exception e) {
+            System.out.println("Excepcion leyendo fichero " + fichero + ": " + e);
+        }
+    }
+
+    private void leeEscenas() {
+        String fichero = "C:\\Users\\Practicas\\Desktop\\escenas.txt";
+        try {
+
+            FileReader fr = new FileReader(fichero);
+            BufferedReader br = new BufferedReader(fr);
+
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                escenas.add(linea);
+            }
+            fr.close();
+        } catch (Exception e) {
+            System.out.println("Excepcion leyendo fichero " + fichero + ": " + e);
+        }
+    }
+
     public ArrayList<String> getElementos() {
         return elementos;
+    }
+
+    public ArrayList<String> getPersonajes() {
+        return personajes;
+    }
+
+    public ArrayList<String> getTramas() {
+        return tramas;
+    }
+
+    public ArrayList<String> getSecuencias() {
+        return secuencias;
+    }
+
+    public ArrayList<String> getEscenas() {
+        return escenas;
     }
 
     public ArrayList<String> getZonas() {
@@ -266,14 +460,14 @@ public class Controlador {
     public void cambiaTabla(String i) {
         try {
             switch (i) {
-               
+
                 case "Elementos":
                     split.setLeftComponent(tabla_elementos);
-                   // tabla_activa = i;
+                    // tabla_activa = i;
                     break;
                 case "Zonas":
                     split.setLeftComponent(tabla_zonas);
-                  //  tabla_activa = i;
+                    //  tabla_activa = i;
                     break;
                 case "Personajes":
                     split.setLeftComponent(tabla_personajes);
@@ -322,6 +516,22 @@ public class Controlador {
         tabla_zonas.setFinElemento(linea);
     }
 
+      public void setFinSecuencias(int linea) {
+        tabla_secuencias.setFinElemento(linea);
+    }
+        public void setFinSPersonajes(int linea) {
+        tabla_personajes.setFinElemento(linea);
+    }
+          public void setFinTramas(int linea) {
+        tabla_tramas.setFinElemento(linea);
+    }
+    
+ 
+
+    public void setFinEscenas(int linea) {
+        tabla_escenas.setFinElemento(linea);
+    }
+
     public JTable getTablaElementos() {
         return tabla_elementos.getTabla();
     }
@@ -329,21 +539,19 @@ public class Controlador {
     public JTable getTablaZonas() {
         return tabla_zonas.getTabla();
     }
-
-    private void leePersonajes() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private void leeTramas() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private void leeSecuencias() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     
-    private void leeEscenas() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
+     public JTable getTablaPersonajes() {
+        return tabla_personajes.getTabla();
+    }
+      public JTable getTablaTramas() {
+        return tabla_tramas.getTabla();
+    }
+       public JTable getTablaSecuencias() {
+        return tabla_secuencias.getTabla();
+    }
+        public JTable getTablaEscenas() {
+        return tabla_escenas.getTabla();
     }
 
 }

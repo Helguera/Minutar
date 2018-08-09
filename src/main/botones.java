@@ -28,9 +28,16 @@ public class botones extends javax.swing.JPanel {
     private Controlador controlador;
     private ArrayList<String> elementos;
     private ArrayList<String> zonas;
+    private ArrayList<String> personajes;
+    private ArrayList<String> tramas;
+    private ArrayList<String> secuencias;
+    private ArrayList<String> escenas;
+
     private boolean[] muestraPanel = {false, false, false, false, false, false};
 
     private String lastButton = null;
+    private String lastButton2 = null;
+    private String lastButton3 = null;
 
     /**
      * Creates new form botones
@@ -43,6 +50,10 @@ public class botones extends javax.swing.JPanel {
 
         elementos = controlador.getElementos();
         zonas = controlador.getZonas();
+                personajes = controlador.getPersonajes();
+        tramas = controlador.getTramas();
+                secuencias = controlador.getSecuencias();
+        escenas = controlador.getEscenas();
 
         initComponents();
         tabbed.removeTabAt(1);
@@ -58,6 +69,14 @@ public class botones extends javax.swing.JPanel {
 
         //Crea un boton zona por cada zona leida del txt
         cargaZonas();
+
+        cargaPersonajes();
+
+        cargaTramas();
+
+        cargaSecuencias();
+
+        cargaEscenas();
     }
 
     /**
@@ -70,6 +89,8 @@ public class botones extends javax.swing.JPanel {
     private void initComponents() {
 
         grupo = new javax.swing.ButtonGroup();
+        grupoS = new javax.swing.ButtonGroup();
+        grupoE = new javax.swing.ButtonGroup();
         tabbed = new javax.swing.JTabbedPane();
         pnlConfig = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
@@ -87,9 +108,13 @@ public class botones extends javax.swing.JPanel {
         scroll_zonas = new javax.swing.JScrollPane();
         pnlZonas = new javax.swing.JPanel();
         scroll_personajes = new javax.swing.JScrollPane();
+        pnlPer = new javax.swing.JPanel();
         scroll_tramas = new javax.swing.JScrollPane();
+        pnlTra = new javax.swing.JPanel();
         scroll_secuencias = new javax.swing.JScrollPane();
+        pnlSec = new javax.swing.JPanel();
         scroll_escenas = new javax.swing.JScrollPane();
+        pnlEsc = new javax.swing.JPanel();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -222,15 +247,31 @@ public class botones extends javax.swing.JPanel {
         tabbed.addTab("Zonas", scroll_zonas);
 
         scroll_personajes.setName("Personajes"); // NOI18N
+
+        pnlPer.setLayout(new java.awt.GridLayout(0, 2));
+        scroll_personajes.setViewportView(pnlPer);
+
         tabbed.addTab("Personajes", scroll_personajes);
 
         scroll_tramas.setName("Tramas"); // NOI18N
+
+        pnlTra.setLayout(new java.awt.GridLayout(0, 2));
+        scroll_tramas.setViewportView(pnlTra);
+
         tabbed.addTab("Tramas", scroll_tramas);
 
         scroll_secuencias.setName("Secuencias"); // NOI18N
+
+        pnlSec.setLayout(new java.awt.GridLayout(0, 2));
+        scroll_secuencias.setViewportView(pnlSec);
+
         tabbed.addTab("Secuencias", scroll_secuencias);
 
         scroll_escenas.setName("Escenas"); // NOI18N
+
+        pnlEsc.setLayout(new java.awt.GridLayout(0, 2));
+        scroll_escenas.setViewportView(pnlEsc);
+
         tabbed.addTab("Escenas", scroll_escenas);
 
         add(tabbed, java.awt.BorderLayout.CENTER);
@@ -361,12 +402,18 @@ public class botones extends javax.swing.JPanel {
     private javax.swing.JCheckBox chk_tramas;
     private javax.swing.JCheckBox chk_zonas;
     private javax.swing.ButtonGroup grupo;
+    private javax.swing.ButtonGroup grupoE;
+    private javax.swing.ButtonGroup grupoS;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel pnlConfig;
     private javax.swing.JPanel pnlElementos;
+    private javax.swing.JPanel pnlEsc;
+    private javax.swing.JPanel pnlPer;
+    private javax.swing.JPanel pnlSec;
+    private javax.swing.JPanel pnlTra;
     private javax.swing.JPanel pnlZonas;
     private javax.swing.JScrollPane scroll_elementos;
     private javax.swing.JScrollPane scroll_escenas;
@@ -503,6 +550,264 @@ public class botones extends javax.swing.JPanel {
 
         }
         pnlElementos.setVisible(true);
+
+    }
+
+    private void cargaPersonajes() {
+        for (int i = 0; i < personajes.size(); i++) {
+            JToggleButton boton = new JToggleButton();
+            boton.setText("Inicio");
+            boton.setVisible(true);
+            boton.setName("Boton" + i);
+            boton.addActionListener((ActionEvent e) -> {
+                Component comp[] = pnlPer.getComponents();
+                int pos = 0;
+                for (int j = 0; j < comp.length; j++) {
+                    if (e.getSource().hashCode() == (comp[j].hashCode())) {
+                        pos = j;
+                    }
+                }
+
+                // comp[pos].setEnabled(false);
+                if (boton.isSelected()) {
+                    /*TODO: Montar un mapa que contenga como clave el id, hashcode, nuemro o lo que sea del boton presionado
+                         y como valor el número de línea asociado a ese botón, de tal forma que cuando se pulse se crea un nuevo par
+                         y al despulsarse se elimina, teniendo siempre acceso a que línea hay que modificar en función del botón pulsado
+                         Queda ver donde va mejor este mapa, en principio la idea es en controlador*/
+                    boton.setText("Fin");
+                    controlador.getLineaBoton().put(boton.getName(), controlador.getNumLineaPersonajes());
+                    controlador.addRowPersonajes(new Object[]{controlador.getNumLineaPersonajes(), controlador.getTime(), "", comp[pos + 1].getName()});
+                    controlador.incrementaNumLineaPersonajes();
+
+                } else {
+                    boton.setText("Inicio");
+
+                    Iterator it = controlador.getLineaBoton().entrySet().iterator();
+                    while (it.hasNext()) {
+                        Map.Entry pair = (Map.Entry) it.next();
+                        if (pair.getKey().equals(boton.getName())) {
+                            controlador.setFinElemento((int) pair.getValue());
+                            controlador.getLineaBoton().remove(pair.getKey());
+                            it.remove(); // avoids a ConcurrentModificationException
+                        }
+                    }
+
+                }
+
+            });
+
+            pnlPer.add(boton);
+            pnlPer.updateUI();
+
+            JLabel etiqueta = new JLabel();
+            etiqueta.setText(personajes.get(i));
+            etiqueta.setHorizontalAlignment(JLabel.CENTER);
+            etiqueta.setVisible(true);
+            etiqueta.setName(personajes.get(i));
+            pnlPer.add(etiqueta);
+            pnlPer.updateUI();
+
+        }
+        pnlPer.setVisible(true);
+    }
+
+    private void cargaTramas() {
+        for (int i = 0; i < tramas.size(); i++) {
+            JToggleButton boton = new JToggleButton();
+            boton.setText("Inicio");
+            boton.setVisible(true);
+            boton.setName("Boton" + i);
+            boton.addActionListener((ActionEvent e) -> {
+                Component comp[] = pnlTra.getComponents();
+                int pos = 0;
+                for (int j = 0; j < comp.length; j++) {
+                    if (e.getSource().hashCode() == (comp[j].hashCode())) {
+                        pos = j;
+                    }
+                }
+
+                // comp[pos].setEnabled(false);
+                if (boton.isSelected()) {
+                    /*TODO: Montar un mapa que contenga como clave el id, hashcode, nuemro o lo que sea del boton presionado
+                         y como valor el número de línea asociado a ese botón, de tal forma que cuando se pulse se crea un nuevo par
+                         y al despulsarse se elimina, teniendo siempre acceso a que línea hay que modificar en función del botón pulsado
+                         Queda ver donde va mejor este mapa, en principio la idea es en controlador*/
+                    boton.setText("Fin");
+                    controlador.getLineaBoton().put(boton.getName(), controlador.getNumLineaTramas());
+                    controlador.addRowTramas(new Object[]{controlador.getNumLineaTramas(), controlador.getTime(), "", comp[pos + 1].getName()});
+                    controlador.incrementaNumLineaTramas();
+
+                } else {
+                    boton.setText("Inicio");
+
+                    Iterator it = controlador.getLineaBoton().entrySet().iterator();
+                    while (it.hasNext()) {
+                        Map.Entry pair = (Map.Entry) it.next();
+                        if (pair.getKey().equals(boton.getName())) {
+                            controlador.setFinElemento((int) pair.getValue());
+                            controlador.getLineaBoton().remove(pair.getKey());
+                            it.remove(); // avoids a ConcurrentModificationException
+                        }
+                    }
+
+                }
+
+            });
+
+            pnlTra.add(boton);
+            pnlTra.updateUI();
+
+            JLabel etiqueta = new JLabel();
+            etiqueta.setText(tramas.get(i));
+            etiqueta.setHorizontalAlignment(JLabel.CENTER);
+            etiqueta.setVisible(true);
+            etiqueta.setName(tramas.get(i));
+            pnlTra.add(etiqueta);
+            pnlTra.updateUI();
+
+        }
+        pnlTra.setVisible(true);
+    }
+
+    private void cargaSecuencias() {
+        for (int i = 0; i < secuencias.size(); i++) {
+            JToggleButton boton = new JToggleButton();
+            boton.setText(secuencias.get(i));
+            boton.setVisible(true);
+            boton.setName(secuencias.get(i));
+            grupoS.add(boton);
+            boton.addActionListener((ActionEvent e) -> {
+                Component comp[] = pnlSec.getComponents();
+                int pos = 0;
+                for (int j = 0; j < comp.length; j++) {
+                    if (e.getSource().hashCode() == (comp[j].hashCode())) {
+                        pos = j;
+                    }
+                }
+
+                // comp[pos].setEnabled(false);
+                if (boton.isSelected()) {
+
+                    /*TODO: Montar un mapa que contenga como clave el id, hashcode, nuemro o lo que sea del boton presionado
+                         y como valor el número de línea asociado a ese botón, de tal forma que cuando se pulse se crea un nuevo par
+                         y al despulsarse se elimina, teniendo siempre acceso a que línea hay que modificar en función del botón pulsado
+                         Queda ver donde va mejor este mapa, en principio la idea es en controlador*/
+                    controlador.getLineaBoton().put(boton.getName(), controlador.getNumLineaSecuencias());
+                    controlador.addRowSecuencias(new Object[]{controlador.getNumLineaSecuencias(), controlador.getTime(), "", comp[pos + 0].getName()});
+                    controlador.incrementaNumLineaSecuencias();
+
+                    if (lastButton2 == null) {
+
+                    } else {
+                        controlador.setFinSecuencias(controlador.getNumLineaSecuencias() - 2);
+                    }
+
+                    /*} else {
+                        System.out.println("fafasf");
+                        Iterator it = controlador.getLineaBoton().entrySet().iterator();
+                        while (it.hasNext()) {
+                            Map.Entry pair = (Map.Entry) it.next();
+                            if (pair.getKey().equals(lastButton)) {
+                                controlador.setFinZonas((int) pair.getValue());
+                                controlador.getLineaBoton().remove(pair.getKey());
+                                it.remove(); // avoids a ConcurrentModificationException
+                            }
+                        }
+
+                        
+                    }*/
+                    lastButton2 = boton.getName();
+
+                } else {
+                    System.out.println("fafasf");
+                    Iterator it = controlador.getLineaBoton().entrySet().iterator();
+                    while (it.hasNext()) {
+                        Map.Entry pair = (Map.Entry) it.next();
+                        if (pair.getKey().equals(boton.getName())) {
+                            controlador.setFinZonas((int) pair.getValue());
+                            controlador.getLineaBoton().remove(pair.getKey());
+                            it.remove(); // avoids a ConcurrentModificationException
+                        }
+                    }
+                }
+            });
+
+            pnlSec.add(boton);
+            pnlSec.updateUI();
+
+        }
+        pnlSec.setVisible(true);
+
+    }
+
+    private void cargaEscenas() {
+        for (int i = 0; i < escenas.size(); i++) {
+            JToggleButton boton = new JToggleButton();
+            boton.setText(escenas.get(i));
+            boton.setVisible(true);
+            boton.setName(escenas.get(i));
+            grupoE.add(boton);
+            boton.addActionListener((ActionEvent e) -> {
+                Component comp[] = pnlEsc.getComponents();
+                int pos = 0;
+                for (int j = 0; j < comp.length; j++) {
+                    if (e.getSource().hashCode() == (comp[j].hashCode())) {
+                        pos = j;
+                    }
+                }
+
+                // comp[pos].setEnabled(false);
+                if (boton.isSelected()) {
+
+                    /*TODO: Montar un mapa que contenga como clave el id, hashcode, nuemro o lo que sea del boton presionado
+                         y como valor el número de línea asociado a ese botón, de tal forma que cuando se pulse se crea un nuevo par
+                         y al despulsarse se elimina, teniendo siempre acceso a que línea hay que modificar en función del botón pulsado
+                         Queda ver donde va mejor este mapa, en principio la idea es en controlador*/
+                    controlador.getLineaBoton().put(boton.getName(), controlador.getNumLineaEscenas());
+                    controlador.addRowZonas(new Object[]{controlador.getNumLineaEscenas(), controlador.getTime(), "", comp[pos + 0].getName()});
+                    controlador.incrementaNumLineaEscenas();
+
+                    if (lastButton3 == null) {
+
+                    } else {
+                        controlador.setFinEscenas(controlador.getNumLineaEscenas() - 2);
+                    }
+
+                    /*} else {
+                        System.out.println("fafasf");
+                        Iterator it = controlador.getLineaBoton().entrySet().iterator();
+                        while (it.hasNext()) {
+                            Map.Entry pair = (Map.Entry) it.next();
+                            if (pair.getKey().equals(lastButton)) {
+                                controlador.setFinZonas((int) pair.getValue());
+                                controlador.getLineaBoton().remove(pair.getKey());
+                                it.remove(); // avoids a ConcurrentModificationException
+                            }
+                        }
+
+                        
+                    }*/
+                    lastButton3 = boton.getName();
+
+                } else {
+                    System.out.println("fafasf");
+                    Iterator it = controlador.getLineaBoton().entrySet().iterator();
+                    while (it.hasNext()) {
+                        Map.Entry pair = (Map.Entry) it.next();
+                        if (pair.getKey().equals(boton.getName())) {
+                            controlador.setFinZonas((int) pair.getValue());
+                            controlador.getLineaBoton().remove(pair.getKey());
+                            it.remove(); // avoids a ConcurrentModificationException
+                        }
+                    }
+                }
+            });
+
+            pnlEsc.add(boton);
+            pnlEsc.updateUI();
+
+        }
+        pnlEsc.setVisible(true);
 
     }
 
