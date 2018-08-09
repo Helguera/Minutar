@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import static javafx.util.Duration.millis;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.UIManager;
@@ -122,7 +123,7 @@ public class Controlador {
         split = new JSplitPane();
         split.setResizeWeight(0.9);
         split.setRightComponent(botones);
-        split.setLeftComponent(tabla_elementos);
+        split.setLeftComponent(new JPanel());
 
         
         
@@ -205,7 +206,7 @@ public class Controlador {
     }
 
     private void leeElementos() {
-        String fichero = "C:\\Users\\Sociograph\\Desktop\\elementos.txt";
+        String fichero = "C:\\Users\\Practicas\\Desktop\\elementos.txt";
         try {
 
             FileReader fr = new FileReader(fichero);
@@ -222,7 +223,7 @@ public class Controlador {
     }
 
     private void leeZonas() {
-        String fichero = "C:\\Users\\Sociograph\\Desktop\\zonas.txt";
+        String fichero = "C:\\Users\\Practicas\\Desktop\\zonas.txt";
         try {
             FileReader fr = new FileReader(fichero);
             BufferedReader br = new BufferedReader(fr);
