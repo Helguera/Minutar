@@ -586,7 +586,7 @@ public class botones extends javax.swing.JPanel {
                     while (it.hasNext()) {
                         Map.Entry pair = (Map.Entry) it.next();
                         if (pair.getKey().equals(boton.getName())) {
-                            controlador.setFinElemento((int) pair.getValue());
+                            controlador.setFinSPersonajes((int) pair.getValue());
                             controlador.getLineaBoton().remove(pair.getKey());
                             it.remove(); // avoids a ConcurrentModificationException
                         }
@@ -644,7 +644,7 @@ public class botones extends javax.swing.JPanel {
                     while (it.hasNext()) {
                         Map.Entry pair = (Map.Entry) it.next();
                         if (pair.getKey().equals(boton.getName())) {
-                            controlador.setFinElemento((int) pair.getValue());
+                            controlador.setFinTramas((int) pair.getValue());
                             controlador.getLineaBoton().remove(pair.getKey());
                             it.remove(); // avoids a ConcurrentModificationException
                         }
@@ -724,7 +724,7 @@ public class botones extends javax.swing.JPanel {
                     while (it.hasNext()) {
                         Map.Entry pair = (Map.Entry) it.next();
                         if (pair.getKey().equals(boton.getName())) {
-                            controlador.setFinZonas((int) pair.getValue());
+                            controlador.setFinSecuencias((int) pair.getValue());
                             controlador.getLineaBoton().remove(pair.getKey());
                             it.remove(); // avoids a ConcurrentModificationException
                         }
@@ -795,7 +795,7 @@ public class botones extends javax.swing.JPanel {
                     while (it.hasNext()) {
                         Map.Entry pair = (Map.Entry) it.next();
                         if (pair.getKey().equals(boton.getName())) {
-                            controlador.setFinZonas((int) pair.getValue());
+                            controlador.setFinEscenas((int) pair.getValue());
                             controlador.getLineaBoton().remove(pair.getKey());
                             it.remove(); // avoids a ConcurrentModificationException
                         }
