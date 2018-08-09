@@ -5,8 +5,16 @@
  */
 package main;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
+import javax.swing.JScrollBar;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
@@ -16,11 +24,17 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Tabla extends javax.swing.JPanel {
 
+    private Controlador controlador;
+    private JTable elementos;
+    private JTable zonas;
+
     /**
      * Creates new form Tabla
      */
-    public Tabla() {
+    public Tabla(Controlador controlador) {
         initComponents();
+
+        this.controlador = controlador;
 
         //Centrar los elementos de la tabla
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
@@ -33,7 +47,6 @@ public class Tabla extends javax.swing.JPanel {
         centerRenderer.setHorizontalAlignment(JLabel.RIGHT);
         tabla.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
 
-        
     }
 
     /**
@@ -48,7 +61,7 @@ public class Tabla extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        addLinea = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
@@ -81,14 +94,12 @@ public class Tabla extends javax.swing.JPanel {
         tabla.setColumnSelectionAllowed(true);
         tabla.setIntercellSpacing(new java.awt.Dimension(10, 3));
         tabla.setRowHeight(20);
-        tabla.setRowMargin(3);
         jScrollPane1.setViewportView(tabla);
         tabla.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         if (tabla.getColumnModel().getColumnCount() > 0) {
             tabla.getColumnModel().getColumn(0).setMinWidth(35);
             tabla.getColumnModel().getColumn(0).setPreferredWidth(35);
             tabla.getColumnModel().getColumn(0).setMaxWidth(35);
-            tabla.getColumnModel().getColumn(0).setCellRenderer(null);
             tabla.getColumnModel().getColumn(1).setMinWidth(70);
             tabla.getColumnModel().getColumn(1).setPreferredWidth(70);
             tabla.getColumnModel().getColumn(1).setMaxWidth(70);
@@ -99,32 +110,132 @@ public class Tabla extends javax.swing.JPanel {
 
         add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
-        jPanel2.setLayout(new java.awt.GridLayout());
+        jPanel2.setLayout(new java.awt.GridLayout(1, 0));
 
-        jButton1.setText("Añadir línea");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        addLinea.setText("Añadir línea");
+        addLinea.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                addLineaActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton1);
+        jPanel2.add(addLinea);
 
         jButton2.setText("Eliminar línea");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         jPanel2.add(jButton2);
 
         jButton3.setText("Exportar CSV");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         jPanel2.add(jButton3);
 
         add(jPanel2, java.awt.BorderLayout.PAGE_END);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void addLineaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addLineaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        int seleccionado = tabla.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel) tabla.getModel();
+
+        if (controlador.getTablaActiva() == 0) {
+            model.insertRow(seleccionado + 1, new Object[]{(controlador.getNumLineaElementos()), null, null, null});
+            controlador.incrementaNumLineaElementos();
+        } else {
+            model.insertRow(seleccionado + 1, new Object[]{(controlador.getNumLineaElementos()), null, null, null});
+            controlador.incrementaNumLineaZonas();
+        }
+        reordenaIndices();
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                JScrollBar sb = jScrollPane1.getVerticalScrollBar();
+                sb.setValue(sb.getMaximum());
+                jScrollPane1.repaint();
+                jScrollPane1.revalidate();
+            }
+        });
+    }//GEN-LAST:event_addLineaActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        int seleccionado = tabla.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel) tabla.getModel();
+
+        if (controlador.getTablaActiva() == 0) {
+            model.removeRow(seleccionado);
+            controlador.decrementaNumLineaElementos();
+        } else {
+            model.removeRow(seleccionado);
+            controlador.decrementaNumLineaZonas();
+        }
+
+        reordenaIndices();
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                JScrollBar sb = jScrollPane1.getVerticalScrollBar();
+                sb.setValue(sb.getMaximum());
+                jScrollPane1.repaint();
+                jScrollPane1.revalidate();
+            }
+        });
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+
+        try {
+            String direccion = "C:\\Users\\Sociograph\\Desktop\\" + controlador.getVideoName() + ".csv";
+            PrintWriter writer;
+            writer = new PrintWriter(direccion, "UTF-8");
+
+            DefaultTableModel model_elementos = (DefaultTableModel) elementos.getModel();
+            DefaultTableModel model_zonas = (DefaultTableModel) zonas.getModel();
+
+            int longitud;
+            if (model_elementos.getRowCount() > model_zonas.getRowCount()) {
+                longitud = model_elementos.getRowCount();
+            } else {
+                longitud = model_zonas.getRowCount();
+            }
+
+            writer.println("Nº,Inicio,Fin,Elemento,,,Nº,Inicio,Fin,Zona");
+
+            for (int i = 0; i < longitud; i++) {
+                String linea;
+
+                //writer.println(model_elementos.getValueAt(i, 0) + "," + model_elementos.getValueAt(i, 1) + "," + model_elementos.getValueAt(i, 2) + "," + model_elementos.getValueAt(i, 3) + ",,," + model_zonas.getValueAt(i, 0) + "," + model_zonas.getValueAt(i, 1) + "," + model_zonas.getValueAt(i, 2) + "," + model_zonas.getValueAt(i, 3));
+
+                /*if (model_elementos.getRowCount() < longitud) {
+                    writer.println(model_elementos.getValueAt(i, 0) + "," + model_elementos.getValueAt(i, 1) + "," + model_elementos.getValueAt(i, 2) + "," + model_elementos.getValueAt(i, 3) + ",,," + model_zonas.getValueAt(i, 0) + "," + model_zonas.getValueAt(i, 1) + "," + model_zonas.getValueAt(i, 2) + "," + model_zonas.getValueAt(i, 3));
+                } else {
+                    if (model_zonas.getRowCount() > longitud) {
+                        writer.println(",,,,,,," + model_zonas.getValueAt(i, 0) + "," + model_zonas.getValueAt(i, 1) + "," + model_zonas.getValueAt(i, 2) + "," + model_zonas.getValueAt(i, 3));
+                    } else {
+
+                    }
+                }*/
+            }
+
+            writer.close();
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Tabla.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(Tabla.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
+    }//GEN-LAST:event_jButton3ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton addLinea;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JPanel jPanel2;
@@ -133,8 +244,51 @@ public class Tabla extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     public void setRow(Object elementos) {
+
         DefaultTableModel model = (DefaultTableModel) tabla.getModel();
         model.addRow((Object[]) elementos);
+        revalidate();
+
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                JScrollBar sb = jScrollPane1.getVerticalScrollBar();
+                sb.setValue(sb.getMaximum());
+                jScrollPane1.repaint();
+                jScrollPane1.revalidate();
+            }
+        });
+
+    }
+
+    public void getRow(int numFila, String tiempo) {
+        DefaultTableModel model = (DefaultTableModel) tabla.getModel();
+        model = (DefaultTableModel) tabla.getModel();
+        model.setValueAt(tiempo, numFila, 2);
+
+    }
+
+    public void reordenaIndices() {
+        DefaultTableModel model = (DefaultTableModel) tabla.getModel();
+        for (int i = 0; i < tabla.getRowCount(); i++) {
+            model.setValueAt(i + 1, i, 0);
+            model.setValueAt(model.getValueAt(i, 1), i, 1);
+            model.setValueAt(model.getValueAt(i, 2), i, 2);
+            model.setValueAt(model.getValueAt(i, 3), i, 3);
+        }
+    }
+
+    public void setFinElemento(int linea) {
+        DefaultTableModel model = (DefaultTableModel) tabla.getModel();
+        System.out.println("LA LINEA ES " + linea);
+        model.setValueAt(linea, linea - 1, 0);
+        model.setValueAt(model.getValueAt(linea - 1, 1), linea - 1, 1);
+        model.setValueAt(controlador.getTime(), linea - 1, 2);
+        model.setValueAt(model.getValueAt(linea - 1, 3), linea - 1, 3);
+
+    }
+
+    public JTable getTabla() {
+        return tabla;
     }
 
 }

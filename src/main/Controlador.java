@@ -10,13 +10,22 @@ import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import static javafx.util.Duration.millis;
 import javax.swing.JFrame;
 import javax.swing.JSplitPane;
+import javax.swing.JTable;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.table.DefaultTableModel;
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.discovery.NativeDiscovery;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
@@ -31,19 +40,42 @@ public class Controlador {
 
     private Controles controles;
     private JFrame mainFrame;
-    private Tabla tabla;
+    private Tabla tabla_elementos;
+    private Tabla tabla_zonas;
     private botones botones;
-    private Controlador controlador;
     private JSplitPane split;
+    private ArrayList<String> elementos;
+    private ArrayList<String> zonas;
     
-    private int numLinea=1;
+    private int tabla_activa = 0;   // 0 si esta la de elementos, 1 si esta la de zonas
 
-    public int getNumLinea() {
-        return numLinea;
+    private HashMap lineaBoton = new HashMap();
+
+    private int numLineaElementos = 1;
+    private int numLineaZonas = 1;
+
+    public int getNumLineaElementos() {
+        return numLineaElementos;
     }
 
-    public void setNumLinea(int numLinea) {
-        this.numLinea = numLinea;
+    public void setNumLinea(int numLineaElementos) {
+        this.numLineaElementos = numLineaElementos;
+    }
+    
+    public int getNumLineaZonas() {
+        return numLineaZonas;
+    }
+
+    public void setNumLineaZonas(int numLineaZonas) {
+        this.numLineaZonas = numLineaZonas;
+    }
+
+    public HashMap getLineaBoton() {
+        return lineaBoton;
+    }
+
+    public void setLineaBoton(HashMap lineaBoton) {
+        this.lineaBoton = lineaBoton;
     }
 
     public Controlador() {
@@ -51,10 +83,16 @@ public class Controlador {
         //Establece los botones al estilo de Windows
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-        } catch (Exception e) {
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException e) {
             System.out.println("UIManager Exception : " + e);
         }
 
+        elementos = new ArrayList<>();
+        leeElementos();
+        zonas = new ArrayList<>();
+        leeZonas();
+
+        //this.setExtendedState(MAXIMIZED_BOTH);
         boolean found = new NativeDiscovery().discover();
         EmbeddedMediaPlayerComponent mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
         EmbeddedMediaPlayer embeddedMediaPlayer = mediaPlayerComponent.getMediaPlayer();
@@ -63,7 +101,7 @@ public class Controlador {
         videoSurface.setBackground(Color.black);
         videoSurface.setSize(800, 600);
 
-        List<String> vlcArgs = new ArrayList<String>();
+        List<String> vlcArgs = new ArrayList<>();
 
         vlcArgs.add("--no-plugins-cache");
         vlcArgs.add("--no-video-title-show");
@@ -78,12 +116,15 @@ public class Controlador {
         final PlayerControlsPanel controlsPanel = new PlayerControlsPanel(embeddedMediaPlayer);
         controles = new Controles(embeddedMediaPlayer);
         botones = new botones(this);
-        tabla = new Tabla();
+        tabla_elementos = new Tabla(this);
+        tabla_zonas = new Tabla(this);
         mainFrame = new JFrame();
         split = new JSplitPane();
         split.setResizeWeight(0.9);
         split.setRightComponent(botones);
-        split.setLeftComponent(tabla);
+        split.setLeftComponent(tabla_elementos);
+
+        
         
 
         //Colocar las ventanas en el frame original con el border layout
@@ -93,20 +134,19 @@ public class Controlador {
         mainFrame.add(videoSurface, BorderLayout.NORTH);
         mainFrame.add(controles, BorderLayout.SOUTH);
         mainFrame.add(split, BorderLayout.CENTER);
-       // mainFrame.add(botones, BorderLayout.EAST);
+        // mainFrame.add(botones, BorderLayout.EAST);
         //mainFrame.add(tabla, BorderLayout.WEST);
-        
 
         //tabla.setRow(new Object[]{"1", "0:00:00", "0:01:56", "Etiqueta info"});
-
-
-       
-
         mainFrame.pack();
         mainFrame.setVisible(true);
 
         //embeddedMediaPlayer.playMedia("C:\\Users\\Sociograph\\Desktop\\23 julio_Gafa 14_Grupo 3\\MOVI0000.avi");
         embeddedMediaPlayer.playMedia("images/logo.png");
+        
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        mainFrame.setVisible(true);
 
     }
 
@@ -124,18 +164,115 @@ public class Controlador {
                 - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(tiempo)));
         return format;
     }
-
-    public void addRow(Object object) {
-        tabla.setRow(object);
+    
+    public String getVideoName(){
+        return controles.getVideoName();
     }
 
-    public Component[] getRows(){
-         return tabla.getComponents();
+    public void addRowElementos(Object object) {
+        tabla_elementos.setRow(object);
+    }
+
+    public void getRowsElementos(int numFila, String tiempo) {
+        numFila = numFila - 2;
+        tabla_elementos.getRow(numFila, tiempo);
+    }
+
+    public void addRowZonas(Object object) {
+        tabla_zonas.setRow(object);
+    }
+
+    public void getRowsZonas(int numFila, String tiempo) {
+        numFila = numFila - 2;
+        tabla_elementos.getRow(numFila, tiempo);
+    }
+
+    public void incrementaNumLineaElementos() {
+        this.numLineaElementos++;
     }
     
-    void incrementaNumLinea() {
-        this.numLinea++;
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void decrementaNumLineaElementos(){
+        this.numLineaElementos--;
     }
+    
+    public void decrementaNumLineaZonas(){
+        this.numLineaZonas--;
+    }
+    
+    
+     public void incrementaNumLineaZonas() {
+        this.numLineaZonas++;
+    }
+
+    private void leeElementos() {
+        String fichero = "C:\\Users\\Sociograph\\Desktop\\elementos.txt";
+        try {
+
+            FileReader fr = new FileReader(fichero);
+            BufferedReader br = new BufferedReader(fr);
+
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                elementos.add(linea);
+            }
+            fr.close();
+        } catch (Exception e) {
+            System.out.println("Excepcion leyendo fichero " + fichero + ": " + e);
+        }
+    }
+
+    private void leeZonas() {
+        String fichero = "C:\\Users\\Sociograph\\Desktop\\zonas.txt";
+        try {
+            FileReader fr = new FileReader(fichero);
+            BufferedReader br = new BufferedReader(fr);
+
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                zonas.add(linea);
+            }
+            fr.close();
+        } catch (Exception e) {
+            System.out.println("Excepcion leyendo fichero " + fichero + ": " + e);
+        }
+    }
+
+    public ArrayList<String> getElementos() {
+        return elementos;
+    }
+
+    public ArrayList<String> getZonas() {
+        return zonas;
+    }
+
+    public void muestraTablaElementos() {
+        split.setLeftComponent(tabla_elementos);
+        tabla_activa = 0;
+    }
+
+    public void muestraTablaZonas() {
+        split.setLeftComponent(tabla_zonas);
+        tabla_activa = 1;
+    }
+    
+    public int getTablaActiva(){
+        return tabla_activa;
+    }
+    
+    public void setFinElemento(int linea){
+        tabla_elementos.setFinElemento(linea);
+    }
+    
+    public void setFinZonas(int linea){
+        tabla_zonas.setFinElemento(linea);
+    }
+   public JTable getTablaElementos(){
+       return tabla_elementos.getTabla();
+   }
+   
+   public JTable getTablaZonas(){
+       return tabla_zonas.getTabla();
+   }
+    
 
 }

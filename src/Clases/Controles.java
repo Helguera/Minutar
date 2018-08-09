@@ -87,6 +87,8 @@ public class Controles extends JPanel {
     private JFileChooser fileChooser;
 
     private boolean mousePressedPlaying = false;
+    
+    private String videoName;
 
     public Controles(EmbeddedMediaPlayer mediaPlayer) {
         this.mediaPlayer = mediaPlayer;
@@ -388,6 +390,7 @@ public class Controles extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 mediaPlayer.enableOverlay(false);
                 if (JFileChooser.APPROVE_OPTION == fileChooser.showOpenDialog(Controles.this)) {
+                    videoName = fileChooser.getSelectedFile().getAbsolutePath();
                     mediaPlayer.playMedia(fileChooser.getSelectedFile().getAbsolutePath());
                 }
                 mediaPlayer.enableOverlay(true);
@@ -483,5 +486,9 @@ public class Controles extends JPanel {
     
     public long getTime(){
         return mediaPlayer.getTime();
+    }
+    
+    public String getVideoName(){
+        return videoName;
     }
 }
