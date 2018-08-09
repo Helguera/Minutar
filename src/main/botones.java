@@ -63,13 +63,21 @@ public class botones extends javax.swing.JPanel {
 
         grupo = new javax.swing.ButtonGroup();
         tabbed = new javax.swing.JTabbedPane();
+        pnlConfig = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        jCheckBox2 = new javax.swing.JCheckBox();
+        jCheckBox4 = new javax.swing.JCheckBox();
+        jCheckBox6 = new javax.swing.JCheckBox();
+        jCheckBox5 = new javax.swing.JCheckBox();
+        jCheckBox3 = new javax.swing.JCheckBox();
         scroll_elementos = new javax.swing.JScrollPane();
         pnlElementos = new javax.swing.JPanel();
         scroll_zonas = new javax.swing.JScrollPane();
         pnlZonas = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTree1 = new javax.swing.JTree();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -78,6 +86,42 @@ public class botones extends javax.swing.JPanel {
                 tabbedStateChanged(evt);
             }
         });
+
+        pnlConfig.setLayout(new java.awt.BorderLayout());
+
+        jPanel1.setLayout(new java.awt.GridLayout());
+
+        jButton1.setText("jButton1");
+        jPanel1.add(jButton1);
+
+        jButton2.setText("jButton2");
+        jPanel1.add(jButton2);
+
+        pnlConfig.add(jPanel1, java.awt.BorderLayout.PAGE_END);
+
+        jPanel2.setLayout(new javax.swing.BoxLayout(jPanel2, javax.swing.BoxLayout.PAGE_AXIS));
+
+        jCheckBox1.setText("jCheckBox1");
+        jPanel2.add(jCheckBox1);
+
+        jCheckBox2.setText("jCheckBox2");
+        jPanel2.add(jCheckBox2);
+
+        jCheckBox4.setText("jCheckBox4");
+        jPanel2.add(jCheckBox4);
+
+        jCheckBox6.setText("jCheckBox6");
+        jPanel2.add(jCheckBox6);
+
+        jCheckBox5.setText("jCheckBox5");
+        jPanel2.add(jCheckBox5);
+
+        jCheckBox3.setText("jCheckBox3");
+        jPanel2.add(jCheckBox3);
+
+        pnlConfig.add(jPanel2, java.awt.BorderLayout.CENTER);
+
+        tabbed.addTab("Configuración", pnlConfig);
 
         pnlElementos.setLayout(new java.awt.GridLayout(0, 2));
         scroll_elementos.setViewportView(pnlElementos);
@@ -88,14 +132,6 @@ public class botones extends javax.swing.JPanel {
         scroll_zonas.setViewportView(pnlZonas);
 
         tabbed.addTab("Zonas", scroll_zonas);
-
-        jPanel3.setLayout(new java.awt.BorderLayout());
-
-        jScrollPane1.setViewportView(jTree1);
-
-        jPanel3.add(jScrollPane1, java.awt.BorderLayout.CENTER);
-
-        tabbed.addTab("Ficheros", jPanel3);
 
         add(tabbed, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
@@ -125,9 +161,17 @@ public class botones extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup grupo;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTree jTree1;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox jCheckBox2;
+    private javax.swing.JCheckBox jCheckBox3;
+    private javax.swing.JCheckBox jCheckBox4;
+    private javax.swing.JCheckBox jCheckBox5;
+    private javax.swing.JCheckBox jCheckBox6;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel pnlConfig;
     private javax.swing.JPanel pnlElementos;
     private javax.swing.JPanel pnlZonas;
     private javax.swing.JScrollPane scroll_elementos;

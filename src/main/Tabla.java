@@ -62,8 +62,9 @@ public class Tabla extends javax.swing.JPanel {
         tabla = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         addLinea = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        removeLinea = new javax.swing.JButton();
+        marcaIncial = new javax.swing.JButton();
+        exportCSV = new javax.swing.JButton();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -120,21 +121,24 @@ public class Tabla extends javax.swing.JPanel {
         });
         jPanel2.add(addLinea);
 
-        jButton2.setText("Eliminar línea");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        removeLinea.setText("Eliminar línea");
+        removeLinea.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                removeLineaActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton2);
+        jPanel2.add(removeLinea);
 
-        jButton3.setText("Exportar CSV");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        marcaIncial.setText("Marca Inicial");
+        jPanel2.add(marcaIncial);
+
+        exportCSV.setText("Exportar CSV");
+        exportCSV.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                exportCSVActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton3);
+        jPanel2.add(exportCSV);
 
         add(jPanel2, java.awt.BorderLayout.PAGE_END);
     }// </editor-fold>//GEN-END:initComponents
@@ -162,7 +166,7 @@ public class Tabla extends javax.swing.JPanel {
         });
     }//GEN-LAST:event_addLineaActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void removeLineaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeLineaActionPerformed
         // TODO add your handling code here:
         int seleccionado = tabla.getSelectedRow();
         DefaultTableModel model = (DefaultTableModel) tabla.getModel();
@@ -184,10 +188,10 @@ public class Tabla extends javax.swing.JPanel {
                 jScrollPane1.revalidate();
             }
         });
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_removeLineaActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+    private void exportCSVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportCSVActionPerformed
+        // Exportar a CSV
 
         try {
             String direccion = "C:\\Users\\Sociograph\\Desktop\\" + controlador.getVideoName() + ".csv";
@@ -208,6 +212,8 @@ public class Tabla extends javax.swing.JPanel {
 
             for (int i = 0; i < longitud; i++) {
                 String linea;
+                
+                //if ()
 
                 //writer.println(model_elementos.getValueAt(i, 0) + "," + model_elementos.getValueAt(i, 1) + "," + model_elementos.getValueAt(i, 2) + "," + model_elementos.getValueAt(i, 3) + ",,," + model_zonas.getValueAt(i, 0) + "," + model_zonas.getValueAt(i, 1) + "," + model_zonas.getValueAt(i, 2) + "," + model_zonas.getValueAt(i, 3));
 
@@ -231,15 +237,16 @@ public class Tabla extends javax.swing.JPanel {
         }
 
 
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_exportCSVActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addLinea;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton exportCSV;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton marcaIncial;
+    private javax.swing.JButton removeLinea;
     private javax.swing.JTable tabla;
     // End of variables declaration//GEN-END:variables
 
