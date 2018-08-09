@@ -28,6 +28,7 @@ public class botones extends javax.swing.JPanel {
     private Controlador controlador;
     private ArrayList<String> elementos;
     private ArrayList<String> zonas;
+    private boolean[] muestraPanel = {false, false, false, false, false, false};
 
     private String lastButton = null;
 
@@ -44,6 +45,8 @@ public class botones extends javax.swing.JPanel {
         zonas = controlador.getZonas();
 
         initComponents();
+        tabbed.removeAll();
+        tabbed.addTab("Configuracion", pnlConfig);
 
         //Crea boton y etiqueta por cada elemento leido del txt
         cargaElementos();
@@ -68,16 +71,20 @@ public class botones extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        jCheckBox4 = new javax.swing.JCheckBox();
-        jCheckBox6 = new javax.swing.JCheckBox();
-        jCheckBox5 = new javax.swing.JCheckBox();
-        jCheckBox3 = new javax.swing.JCheckBox();
+        chk_elementos = new javax.swing.JCheckBox();
+        chk_zonas = new javax.swing.JCheckBox();
+        chk_personajes = new javax.swing.JCheckBox();
+        chk_tramas = new javax.swing.JCheckBox();
+        chk_secuencias = new javax.swing.JCheckBox();
+        chk_escenas = new javax.swing.JCheckBox();
         scroll_elementos = new javax.swing.JScrollPane();
         pnlElementos = new javax.swing.JPanel();
         scroll_zonas = new javax.swing.JScrollPane();
         pnlZonas = new javax.swing.JPanel();
+        scroll_personajes = new javax.swing.JScrollPane();
+        scroll_tramas = new javax.swing.JScrollPane();
+        scroll_secuencias = new javax.swing.JScrollPane();
+        scroll_escenas = new javax.swing.JScrollPane();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -89,39 +96,111 @@ public class botones extends javax.swing.JPanel {
 
         pnlConfig.setLayout(new java.awt.BorderLayout());
 
-        jPanel1.setLayout(new java.awt.GridLayout());
+        jPanel1.setLayout(new java.awt.GridLayout(1, 0));
 
-        jButton1.setText("jButton1");
+        jButton1.setText("AudioVisual");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton1);
 
-        jButton2.setText("jButton2");
+        jButton2.setText("Exp. en Tienda");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton2);
 
         pnlConfig.add(jPanel1, java.awt.BorderLayout.PAGE_END);
 
         jPanel2.setLayout(new javax.swing.BoxLayout(jPanel2, javax.swing.BoxLayout.PAGE_AXIS));
 
-        jCheckBox1.setText("jCheckBox1");
-        jPanel2.add(jCheckBox1);
+        chk_elementos.setText("Elementos");
+        chk_elementos.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                chk_elementosItemStateChanged(evt);
+            }
+        });
+        chk_elementos.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                chk_elementosStateChanged(evt);
+            }
+        });
+        chk_elementos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                chk_elementosMouseClicked(evt);
+            }
+        });
+        chk_elementos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chk_elementosActionPerformed(evt);
+            }
+        });
+        jPanel2.add(chk_elementos);
 
-        jCheckBox2.setText("jCheckBox2");
-        jPanel2.add(jCheckBox2);
+        chk_zonas.setText("Zonas");
+        chk_zonas.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                chk_zonasItemStateChanged(evt);
+            }
+        });
+        chk_zonas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chk_zonasActionPerformed(evt);
+            }
+        });
+        jPanel2.add(chk_zonas);
 
-        jCheckBox4.setText("jCheckBox4");
-        jPanel2.add(jCheckBox4);
+        chk_personajes.setText("Personajes");
+        chk_personajes.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                chk_personajesItemStateChanged(evt);
+            }
+        });
+        chk_personajes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chk_personajesActionPerformed(evt);
+            }
+        });
+        jPanel2.add(chk_personajes);
 
-        jCheckBox6.setText("jCheckBox6");
-        jPanel2.add(jCheckBox6);
+        chk_tramas.setText("Tramas");
+        chk_tramas.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                chk_tramasItemStateChanged(evt);
+            }
+        });
+        chk_tramas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chk_tramasActionPerformed(evt);
+            }
+        });
+        jPanel2.add(chk_tramas);
 
-        jCheckBox5.setText("jCheckBox5");
-        jPanel2.add(jCheckBox5);
+        chk_secuencias.setText("Secuencias");
+        chk_secuencias.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                chk_secuenciasItemStateChanged(evt);
+            }
+        });
+        jPanel2.add(chk_secuencias);
 
-        jCheckBox3.setText("jCheckBox3");
-        jPanel2.add(jCheckBox3);
+        chk_escenas.setText("Escenas");
+        chk_escenas.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                chk_escenasItemStateChanged(evt);
+            }
+        });
+        jPanel2.add(chk_escenas);
 
         pnlConfig.add(jPanel2, java.awt.BorderLayout.CENTER);
 
         tabbed.addTab("Configuración", pnlConfig);
+
+        scroll_elementos.setViewport(null);
 
         pnlElementos.setLayout(new java.awt.GridLayout(0, 2));
         scroll_elementos.setViewportView(pnlElementos);
@@ -132,12 +211,23 @@ public class botones extends javax.swing.JPanel {
         scroll_zonas.setViewportView(pnlZonas);
 
         tabbed.addTab("Zonas", scroll_zonas);
+        tabbed.addTab("Personajes", scroll_personajes);
+        tabbed.addTab("Tramas", scroll_tramas);
+        tabbed.addTab("Secuencias", scroll_secuencias);
+        tabbed.addTab("Escenas", scroll_escenas);
 
         add(tabbed, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+//Boton AV
+
+        chk_elementos.setSelected(false);
+        chk_zonas.setSelected(false);
+        chk_escenas.setSelected(true);
+        chk_tramas.setSelected(true);
+        chk_secuencias.setSelected(true);
+        chk_personajes.setSelected(true);
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -158,23 +248,123 @@ public class botones extends javax.swing.JPanel {
 
     }//GEN-LAST:event_tabbedStateChanged
 
+    private void chk_zonasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_zonasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_chk_zonasActionPerformed
+
+    private void chk_tramasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_tramasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_chk_tramasActionPerformed
+
+    private void chk_personajesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_personajesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_chk_personajesActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        //pollote
+        chk_elementos.setSelected(true);
+
+        chk_zonas.setSelected(true);
+        chk_escenas.setSelected(false);
+        chk_tramas.setSelected(false);
+        chk_secuencias.setSelected(false);
+        chk_personajes.setSelected(false);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void chk_elementosStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chk_elementosStateChanged
+
+
+    }//GEN-LAST:event_chk_elementosStateChanged
+
+    private void chk_elementosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_elementosActionPerformed
+
+
+    }//GEN-LAST:event_chk_elementosActionPerformed
+
+    private void chk_elementosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chk_elementosMouseClicked
+
+    }//GEN-LAST:event_chk_elementosMouseClicked
+
+    private void chk_elementosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chk_elementosItemStateChanged
+        if (!muestraPanel[0]) {
+            tabbed.addTab("Elementos", scroll_elementos);
+            muestraPanel[0] = true;
+        } else {
+            tabbed.remove(scroll_elementos);
+            muestraPanel[0] = false;
+        }
+    }//GEN-LAST:event_chk_elementosItemStateChanged
+
+    private void chk_zonasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chk_zonasItemStateChanged
+        if (!muestraPanel[1]) {
+            tabbed.addTab("Zonas", scroll_zonas);
+            muestraPanel[1] = true;
+        } else {
+            tabbed.remove(scroll_zonas);
+            muestraPanel[1] = false;
+        }
+    }//GEN-LAST:event_chk_zonasItemStateChanged
+
+    private void chk_personajesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chk_personajesItemStateChanged
+        if (!muestraPanel[2]) {
+            tabbed.addTab("Personajes", scroll_personajes);
+            muestraPanel[2] = true;
+        } else {
+            tabbed.remove(scroll_personajes);
+            muestraPanel[2] = false;
+        }
+    }//GEN-LAST:event_chk_personajesItemStateChanged
+
+    private void chk_tramasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chk_tramasItemStateChanged
+        if (!muestraPanel[3]) {
+            tabbed.addTab("Tramas", scroll_tramas);
+            muestraPanel[3] = true;
+        } else {
+            tabbed.remove(scroll_tramas);
+            muestraPanel[3] = false;
+        }    }//GEN-LAST:event_chk_tramasItemStateChanged
+
+    private void chk_secuenciasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chk_secuenciasItemStateChanged
+        if (!muestraPanel[4]) {
+            tabbed.addTab("Secuencias", scroll_secuencias);
+            muestraPanel[4] = true;
+        } else {
+            tabbed.remove(scroll_secuencias);
+            muestraPanel[4] = false;
+        }
+    }//GEN-LAST:event_chk_secuenciasItemStateChanged
+
+    private void chk_escenasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chk_escenasItemStateChanged
+        if (!muestraPanel[5]) {
+            tabbed.addTab("Escenas", scroll_escenas);
+            muestraPanel[5] = true;
+        } else {
+            tabbed.remove(scroll_escenas);
+            muestraPanel[5] = false;
+        }    }//GEN-LAST:event_chk_escenasItemStateChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox chk_elementos;
+    private javax.swing.JCheckBox chk_escenas;
+    private javax.swing.JCheckBox chk_personajes;
+    private javax.swing.JCheckBox chk_secuencias;
+    private javax.swing.JCheckBox chk_tramas;
+    private javax.swing.JCheckBox chk_zonas;
     private javax.swing.ButtonGroup grupo;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox3;
-    private javax.swing.JCheckBox jCheckBox4;
-    private javax.swing.JCheckBox jCheckBox5;
-    private javax.swing.JCheckBox jCheckBox6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel pnlConfig;
     private javax.swing.JPanel pnlElementos;
     private javax.swing.JPanel pnlZonas;
     private javax.swing.JScrollPane scroll_elementos;
+    private javax.swing.JScrollPane scroll_escenas;
+    private javax.swing.JScrollPane scroll_personajes;
+    private javax.swing.JScrollPane scroll_secuencias;
+    private javax.swing.JScrollPane scroll_tramas;
     private javax.swing.JScrollPane scroll_zonas;
     private javax.swing.JTabbedPane tabbed;
     // End of variables declaration//GEN-END:variables
@@ -267,7 +457,7 @@ public class botones extends javax.swing.JPanel {
                     if (lastButton == null) {
 
                     } else {
-                        controlador.setFinZonas(controlador.getNumLineaZonas()-2);
+                        controlador.setFinZonas(controlador.getNumLineaZonas() - 2);
                     }
 
                     /*} else {
