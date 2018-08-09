@@ -45,7 +45,7 @@ public class botones extends javax.swing.JPanel {
         zonas = controlador.getZonas();
 
         initComponents();
-        tabbed.removeAll();
+//        tabbed.removeAll();
         tabbed.addTab("Configuracion", pnlConfig);
 
         //Crea boton y etiqueta por cada elemento leido del txt
@@ -88,12 +88,14 @@ public class botones extends javax.swing.JPanel {
 
         setLayout(new java.awt.BorderLayout());
 
+        tabbed.setName(""); // NOI18N
         tabbed.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 tabbedStateChanged(evt);
             }
         });
 
+        pnlConfig.setName("config"); // NOI18N
         pnlConfig.setLayout(new java.awt.BorderLayout());
 
         jPanel1.setLayout(new java.awt.GridLayout(1, 0));
@@ -200,20 +202,30 @@ public class botones extends javax.swing.JPanel {
 
         tabbed.addTab("Configuración", pnlConfig);
 
-        scroll_elementos.setViewport(null);
+        scroll_elementos.setName("Elementos"); // NOI18N
 
         pnlElementos.setLayout(new java.awt.GridLayout(0, 2));
         scroll_elementos.setViewportView(pnlElementos);
 
         tabbed.addTab("Elementos", scroll_elementos);
 
+        scroll_zonas.setName("Zonas"); // NOI18N
+
         pnlZonas.setLayout(new java.awt.GridLayout(0, 2));
         scroll_zonas.setViewportView(pnlZonas);
 
         tabbed.addTab("Zonas", scroll_zonas);
+
+        scroll_personajes.setName("Personajes"); // NOI18N
         tabbed.addTab("Personajes", scroll_personajes);
+
+        scroll_tramas.setName("Tramas"); // NOI18N
         tabbed.addTab("Tramas", scroll_tramas);
+
+        scroll_secuencias.setName("Secuencias"); // NOI18N
         tabbed.addTab("Secuencias", scroll_secuencias);
+
+        scroll_escenas.setName("Escenas"); // NOI18N
         tabbed.addTab("Escenas", scroll_escenas);
 
         add(tabbed, java.awt.BorderLayout.CENTER);
@@ -234,7 +246,10 @@ public class botones extends javax.swing.JPanel {
 
     private void tabbedStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tabbedStateChanged
         // TODO add your handling code here:
-        controlador.cambiaTabla(tabbed.getSelectedIndex());
+        System.out.println(tabbed.getSelectedComponent().getName());
+        System.out.println(tabbed.getSelectedIndex());
+        System.out.println(tabbed.getComponent(0).getName());
+        controlador.cambiaTabla(tabbed.getSelectedComponent().getName());
     }//GEN-LAST:event_tabbedStateChanged
 
     private void chk_zonasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_zonasActionPerformed
