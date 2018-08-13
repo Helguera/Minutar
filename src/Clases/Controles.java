@@ -50,6 +50,8 @@ import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
 public class Controles extends JPanel {
+    
+    private boolean pausado = false;
 
     private static final long serialVersionUID = 1L;
 
@@ -90,6 +92,8 @@ public class Controles extends JPanel {
     
     private String videoName;
 
+    
+    
     public Controles(EmbeddedMediaPlayer mediaPlayer) {
         this.mediaPlayer = mediaPlayer;
 
@@ -220,7 +224,7 @@ public class Controles extends JPanel {
         bottomPanel.add(rewindButton);
         bottomPanel.add(stopButton);
         bottomPanel.add(pauseButton);
-        bottomPanel.add(playButton);
+        //bottomPanel.add(playButton);
         bottomPanel.add(fastForwardButton);
         bottomPanel.add(nextChapterButton);
 
@@ -337,6 +341,13 @@ public class Controles extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 mediaPlayer.pause();
+                if(pausado == true){
+                    pauseButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("icons/control_pause_blue.png")));
+                    pausado = false;
+                }else{
+                    pauseButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("icons/control_play_blue.png")));
+                    pausado = true;
+                }
             }
         });
 
@@ -392,6 +403,8 @@ public class Controles extends JPanel {
                 if (JFileChooser.APPROVE_OPTION == fileChooser.showOpenDialog(Controles.this)) {
                     videoName = fileChooser.getSelectedFile().getAbsolutePath();
                     mediaPlayer.playMedia(fileChooser.getSelectedFile().getAbsolutePath());
+                    pauseButton.setIcon(new ImageIcon(getClass().getClassLoader().getResource("icons/control_pause_blue.png")));
+                    pausado = false;
                 }
                 mediaPlayer.enableOverlay(true);
             }

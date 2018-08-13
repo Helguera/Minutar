@@ -30,6 +30,7 @@ public class TablaSecEsc extends javax.swing.JPanel {
     private Controlador controlador;
     private JTable elementos;
     private JTable zonas;
+    private int marca_inicial;
 
     /**
      * Creates new form Tabla
@@ -43,7 +44,7 @@ public class TablaSecEsc extends javax.swing.JPanel {
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.LEFT);
         
-        centerRenderer.setHorizontalAlignment(JLabel.RIGHT);
+        centerRenderer.setHorizontalAlignment(JLabel.LEFT);
         tabla.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
         centerRenderer = new DefaultTableCellRenderer();
         
@@ -65,7 +66,6 @@ public class TablaSecEsc extends javax.swing.JPanel {
         addLinea = new javax.swing.JButton();
         removeLinea = new javax.swing.JButton();
         marcaIncial = new javax.swing.JButton();
-        exportCSV = new javax.swing.JButton();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -125,15 +125,12 @@ public class TablaSecEsc extends javax.swing.JPanel {
         jPanel2.add(removeLinea);
 
         marcaIncial.setText("Marca Inicial");
-        jPanel2.add(marcaIncial);
-
-        exportCSV.setText("Exportar CSV");
-        exportCSV.addActionListener(new java.awt.event.ActionListener() {
+        marcaIncial.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exportCSVActionPerformed(evt);
+                marcaIncialActionPerformed(evt);
             }
         });
-        jPanel2.add(exportCSV);
+        jPanel2.add(marcaIncial);
 
         add(jPanel2, java.awt.BorderLayout.PAGE_END);
     }// </editor-fold>//GEN-END:initComponents
@@ -185,59 +182,14 @@ public class TablaSecEsc extends javax.swing.JPanel {
         });
     }//GEN-LAST:event_removeLineaActionPerformed
 
-    private void exportCSVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportCSVActionPerformed
-        // Exportar a CSV
-
-        try {
-            String direccion = "C:\\Users\\Sociograph\\Desktop\\" + controlador.getVideoName() + ".csv";
-            PrintWriter writer;
-            writer = new PrintWriter(direccion, "UTF-8");
-
-            DefaultTableModel model_elementos = (DefaultTableModel) elementos.getModel();
-            DefaultTableModel model_zonas = (DefaultTableModel) zonas.getModel();
-
-            int longitud;
-            if (model_elementos.getRowCount() > model_zonas.getRowCount()) {
-                longitud = model_elementos.getRowCount();
-            } else {
-                longitud = model_zonas.getRowCount();
-            }
-
-            writer.println("Nº,Inicio,Fin,Elemento,,,Nº,Inicio,Fin,Zona");
-
-            for (int i = 0; i < longitud; i++) {
-                String linea;
-                
-                //if ()
-
-                //writer.println(model_elementos.getValueAt(i, 0) + "," + model_elementos.getValueAt(i, 1) + "," + model_elementos.getValueAt(i, 2) + "," + model_elementos.getValueAt(i, 3) + ",,," + model_zonas.getValueAt(i, 0) + "," + model_zonas.getValueAt(i, 1) + "," + model_zonas.getValueAt(i, 2) + "," + model_zonas.getValueAt(i, 3));
-
-                /*if (model_elementos.getRowCount() < longitud) {
-                    writer.println(model_elementos.getValueAt(i, 0) + "," + model_elementos.getValueAt(i, 1) + "," + model_elementos.getValueAt(i, 2) + "," + model_elementos.getValueAt(i, 3) + ",,," + model_zonas.getValueAt(i, 0) + "," + model_zonas.getValueAt(i, 1) + "," + model_zonas.getValueAt(i, 2) + "," + model_zonas.getValueAt(i, 3));
-                } else {
-                    if (model_zonas.getRowCount() > longitud) {
-                        writer.println(",,,,,,," + model_zonas.getValueAt(i, 0) + "," + model_zonas.getValueAt(i, 1) + "," + model_zonas.getValueAt(i, 2) + "," + model_zonas.getValueAt(i, 3));
-                    } else {
-
-                    }
-                }*/
-            }
-
-            writer.close();
-
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(TablaSecEsc.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(TablaSecEsc.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-
-    }//GEN-LAST:event_exportCSVActionPerformed
+    private void marcaIncialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_marcaIncialActionPerformed
+        // TODO add your handling code here:
+        marca_inicial = toSeconds(controlador.getTime());
+    }//GEN-LAST:event_marcaIncialActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addLinea;
-    private javax.swing.JButton exportCSV;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton marcaIncial;
@@ -283,9 +235,9 @@ public class TablaSecEsc extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel) tabla.getModel();
         System.out.println("LA LINEA ES " + linea);
         model.setValueAt(linea, linea - 1, 0);
-        model.setValueAt(model.getValueAt(linea - 1, 1), linea - 1, 1);
-        model.setValueAt(controlador.getTime(), linea - 1, 2);
-        model.setValueAt(model.getValueAt(linea - 1, 3), linea - 1, 3);
+        model.setValueAt(controlador.getTime(), linea - 1, 1);
+        //model.setValueAt(controlador.getTime(), linea - 1, 2);
+        //model.setValueAt(model.getValueAt(linea - 1, 3), linea - 1, 3);
 
     }
 
@@ -299,5 +251,19 @@ public class TablaSecEsc extends javax.swing.JPanel {
         TableColumn tc = tcm.getColumn(1);
         tc.setHeaderValue("Escena");
         th.repaint();
+    }
+    
+    public void setMarcaInicial(int marca_inicial) {
+        this.marca_inicial = marca_inicial;
+    }
+    
+    private int toSeconds(String time) {
+        int segundos = 0;
+        String[] tiempo = time.split(":");
+        segundos+=Integer.parseInt(tiempo[2]);
+        segundos+=Integer.parseInt(tiempo[1])*60;
+        segundos+=Integer.parseInt(tiempo[0])*3600;
+        marcaIncial.setText("Marca inicial en "+time);
+        return segundos;
     }
 }

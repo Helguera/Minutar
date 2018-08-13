@@ -113,13 +113,8 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Marca Inicial"/>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="exportCSV">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Exportar CSV"/>
-          </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="exportCSVActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="marcaIncialActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

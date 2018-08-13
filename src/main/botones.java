@@ -9,14 +9,22 @@ import java.awt.Component;
 import static java.awt.Label.CENTER;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 import static java.util.Objects.hash;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollBar;
+import javax.swing.JTable;
 import javax.swing.JToggleButton;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.text.DefaultCaret;
 
 /**
@@ -38,6 +46,9 @@ public class botones extends javax.swing.JPanel {
     private String lastButton = null;
     private String lastButton2 = null;
     private String lastButton3 = null;
+    private int delay = 0;
+    
+    private int suma = 610;
 
     /**
      * Creates new form botones
@@ -50,9 +61,9 @@ public class botones extends javax.swing.JPanel {
 
         elementos = controlador.getElementos();
         zonas = controlador.getZonas();
-                personajes = controlador.getPersonajes();
+        personajes = controlador.getPersonajes();
         tramas = controlador.getTramas();
-                secuencias = controlador.getSecuencias();
+        secuencias = controlador.getSecuencias();
         escenas = controlador.getEscenas();
 
         initComponents();
@@ -96,6 +107,7 @@ public class botones extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        btnExport = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         chk_elementos = new javax.swing.JCheckBox();
         chk_zonas = new javax.swing.JCheckBox();
@@ -145,6 +157,14 @@ public class botones extends javax.swing.JPanel {
             }
         });
         jPanel1.add(jButton2);
+
+        btnExport.setText("Exportar CSV");
+        btnExport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnExport);
 
         pnlConfig.add(jPanel1, java.awt.BorderLayout.PAGE_END);
 
@@ -393,8 +413,192 @@ public class botones extends javax.swing.JPanel {
             muestraPanel[5] = false;
         }    }//GEN-LAST:event_chk_escenasItemStateChanged
 
+    private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportActionPerformed
+        //Idea: hacer un .csv para cada tabla.
+        //Ver comentario de abajo (linea 466)
+        boolean correcto = true;
+
+        //ELEMENTOS
+        try {
+            
+            JTable temp;
+            PrintWriter writer;
+            if (chk_elementos.isSelected()) {
+                temp = controlador.getTablaElementos();
+                DefaultTableModel model = (DefaultTableModel) temp.getModel();
+                model = (DefaultTableModel) temp.getModel();
+
+                writer = new PrintWriter("./csv/elementos.csv", "ISO-8859-1");
+                writer.println("Inicio;Fin;Elemento");
+
+                for (int i = 0; i < temp.getRowCount(); i++) {
+                    for (int j = 1; j < temp.getColumnCount()-1; j++) {
+                       
+                        writer.print(model.getValueAt(i, j));
+                        if (j != temp.getColumnCount() - 1) {
+                            writer.print(";");
+                        }
+                    }
+                    writer.println();
+                }
+                writer.close();
+            }
+        } catch (Exception e) {
+            correcto = false;
+            controlador.showDialog("No se ha podido exportar la tabla 'Elementos'");
+        }
+        
+        //ZONAS
+        try {
+            JTable temp;
+            PrintWriter writer;
+            if (chk_zonas.isSelected()) {
+                temp = controlador.getTablaZonas();
+                DefaultTableModel model = (DefaultTableModel) temp.getModel();
+                model = (DefaultTableModel) temp.getModel();
+
+                writer = new PrintWriter("./csv/zonas.csv", "ISO-8859-1");
+                writer.println("Inicio;Fin;Zona");
+
+                for (int i = 0; i < temp.getRowCount(); i++) {
+                    for (int j = 1; j < temp.getColumnCount()-1; j++) {
+                        writer.print(model.getValueAt(i, j));
+                        if (j != temp.getColumnCount() - 1) {
+                            writer.print(";");
+                        }
+                    }
+                    writer.println();
+                }
+                writer.close();
+            }
+        } catch (Exception e) {
+            correcto = false;
+            controlador.showDialog("No se ha podido exportar la tabla 'Zonas'");
+        }
+        
+        //PERSONAJES
+        try {
+            JTable temp;
+            PrintWriter writer;
+            if (chk_personajes.isSelected()) {
+                temp = controlador.getTablaPersonajes();
+                DefaultTableModel model = (DefaultTableModel) temp.getModel();
+                model = (DefaultTableModel) temp.getModel();
+
+                writer = new PrintWriter("./csv/personajes.csv", "ISO-8859-1");
+                writer.println("Inicio;Fin;Personaje");
+
+                for (int i = 0; i < temp.getRowCount(); i++) {
+                    for (int j = 1; j < temp.getColumnCount(); j++) {
+                        writer.print(model.getValueAt(i, j));
+                        if (j != temp.getColumnCount() - 1) {
+                            writer.print(";");
+                        }
+                    }
+                    writer.println();
+                }
+                writer.close();
+            }
+        } catch (Exception e) {
+            correcto = false;
+            controlador.showDialog("No se ha podido exportar la tabla 'Personajes'");
+        }
+        
+        //TRAMAS
+        try {
+            JTable temp;
+            PrintWriter writer;
+            if (chk_tramas.isSelected()) {
+                temp = controlador.getTablaTramas();
+                DefaultTableModel model = (DefaultTableModel) temp.getModel();
+                model = (DefaultTableModel) temp.getModel();
+
+                writer = new PrintWriter("./csv/tramas.csv", "ISO-8859-1");
+                writer.println("Inicio;Fin;Trama");
+
+                for (int i = 0; i < temp.getRowCount(); i++) {
+                    for (int j = 1; j < temp.getColumnCount(); j++) {
+                        writer.print(model.getValueAt(i, j));
+                        if (j != temp.getColumnCount() - 1) {
+                            writer.print(";");
+                        }
+                    }
+                    writer.println();
+                }
+                writer.close();
+            }
+        } catch (Exception e) {
+            correcto = false;
+            controlador.showDialog("No se ha podido exportar la tabla 'Tramas'");
+        }
+        
+        //SECUENCIAS
+        try {
+            JTable temp;
+            PrintWriter writer;
+            if (chk_secuencias.isSelected()) {
+                temp = controlador.getTablaSecuencias();
+                DefaultTableModel model = (DefaultTableModel) temp.getModel();
+                model = (DefaultTableModel) temp.getModel();
+
+                writer = new PrintWriter("./csv/secuencias.csv", "ISO-8859-1");
+                writer.println("Número;Secuencia");
+
+                for (int i = 0; i < temp.getRowCount(); i++) {
+                    for (int j = 0; j < temp.getColumnCount(); j++) {
+                        writer.print(model.getValueAt(i, j));
+                        if (j != temp.getColumnCount() - 1) {
+                            writer.print(";");
+                        }
+                    }
+                    writer.println();
+                }
+                writer.close();
+            }
+        } catch (Exception e) {
+            correcto = false;
+            controlador.showDialog("No se ha podido exportar la tabla 'Secuencias'");
+        }
+        
+        //ESCENAS
+        try {
+            JTable temp;
+            PrintWriter writer;
+            if (chk_escenas.isSelected()) {
+                temp = controlador.getTablaEscenas();
+                DefaultTableModel model = (DefaultTableModel) temp.getModel();
+                model = (DefaultTableModel) temp.getModel();
+
+                writer = new PrintWriter("./csv/escenas.csv", "ISO-8859-1");
+                writer.println("Número;Escena");
+
+                for (int i = 0; i < temp.getRowCount(); i++) {
+                    for (int j = 0; j < temp.getColumnCount(); j++) {
+                        writer.print(model.getValueAt(i, j));
+                        if (j != temp.getColumnCount() - 1) {
+                            writer.print(";");
+                        }
+                    }
+                    writer.println();
+                }
+                writer.close();
+            }
+        } catch (Exception e) {
+            correcto = false;
+            controlador.showDialog("No se ha podido exportar la tabla 'Escenas'");
+        }
+        
+        if (correcto){
+            controlador.showDialog("Exportado con éxito");
+            
+        }
+
+
+    }//GEN-LAST:event_btnExportActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnExport;
     private javax.swing.JCheckBox chk_elementos;
     private javax.swing.JCheckBox chk_escenas;
     private javax.swing.JCheckBox chk_personajes;
@@ -447,7 +651,13 @@ public class botones extends javax.swing.JPanel {
                          Queda ver donde va mejor este mapa, en principio la idea es en controlador*/
                     boton.setText("Fin");
                     controlador.getLineaBoton().put(boton.getName(), controlador.getNumLineaElementos());
-                    controlador.addRowElementos(new Object[]{controlador.getNumLineaElementos(), controlador.getTime(), "", comp[pos + 1].getName()});
+                    //Comprobar si el vídeo anterior (el que esta encima en la tabla es distinto. Si lo es, aumentar en 10 segundos el delay
+                    //Hay que guardar el tiempo de la primera marcaa o introducirlo a mano para tener en cuenta eso a la hora de exportar el .csv
+                    //El control de ajuste de tiempos se puede hacer aquí o a la hoa de exportar, donde resulte más sencillo
+                    //Hay que tener en cuenta que al cambiar de vídeo el tiempo no es el de ese video sino el del anterior mas diezxsegundos menos la marca inicial
+                    //Esto quizá sea más conveniente hcerlo en el csv exporter para que se puedan ver los tiempos con más exactitud en las tablas.
+                    //Si se hace en el .csv hay que habilitar una manera de poner la marca inicial
+                    controlador.addRowElementos(new Object[]{controlador.getNumLineaElementos(), controlador.getTime(), "", comp[pos + 1].getName(), controlador.getVideoName()});
                     controlador.incrementaNumLineaElementos();
 
                 } else {
@@ -506,7 +716,7 @@ public class botones extends javax.swing.JPanel {
                          y al despulsarse se elimina, teniendo siempre acceso a que línea hay que modificar en función del botón pulsado
                          Queda ver donde va mejor este mapa, en principio la idea es en controlador*/
                     controlador.getLineaBoton().put(boton.getName(), controlador.getNumLineaZonas());
-                    controlador.addRowZonas(new Object[]{controlador.getNumLineaZonas(), controlador.getTime(), "", comp[pos + 0].getName()});
+                    controlador.addRowZonas(new Object[]{controlador.getNumLineaZonas(), controlador.getTime(), "", comp[pos + 0].getName(), controlador.getVideoName()});
                     controlador.incrementaNumLineaZonas();
 
                     if (lastButton == null) {
@@ -699,7 +909,7 @@ public class botones extends javax.swing.JPanel {
                     if (lastButton2 == null) {
 
                     } else {
-                        controlador.setFinSecuencias(controlador.getNumLineaSecuencias() - 2);
+                        controlador.setFinSecuencias(controlador.getNumLineaSecuencias() - 1);
                     }
 
                     /*} else {
@@ -764,29 +974,15 @@ public class botones extends javax.swing.JPanel {
                          y al despulsarse se elimina, teniendo siempre acceso a que línea hay que modificar en función del botón pulsado
                          Queda ver donde va mejor este mapa, en principio la idea es en controlador*/
                     controlador.getLineaBoton().put(boton.getName(), controlador.getNumLineaEscenas());
-                    controlador.addRowZonas(new Object[]{controlador.getNumLineaEscenas(), controlador.getTime(), "", comp[pos + 0].getName()});
+                    controlador.addRowEscenas(new Object[]{controlador.getNumLineaEscenas(), controlador.getTime(), "", comp[pos + 0].getName()});
                     controlador.incrementaNumLineaEscenas();
 
                     if (lastButton3 == null) {
 
                     } else {
-                        controlador.setFinEscenas(controlador.getNumLineaEscenas() - 2);
+                        controlador.setFinEscenas(controlador.getNumLineaEscenas() - 1);
                     }
 
-                    /*} else {
-                        System.out.println("fafasf");
-                        Iterator it = controlador.getLineaBoton().entrySet().iterator();
-                        while (it.hasNext()) {
-                            Map.Entry pair = (Map.Entry) it.next();
-                            if (pair.getKey().equals(lastButton)) {
-                                controlador.setFinZonas((int) pair.getValue());
-                                controlador.getLineaBoton().remove(pair.getKey());
-                                it.remove(); // avoids a ConcurrentModificationException
-                            }
-                        }
-
-                        
-                    }*/
                     lastButton3 = boton.getName();
 
                 } else {

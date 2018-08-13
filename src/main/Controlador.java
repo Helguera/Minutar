@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import static javafx.util.Duration.millis;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
@@ -68,6 +69,9 @@ public class Controlador {
     private int numLineaTramas = 1;
     private int numLineaSecuencias = 1;
     private int numLineaEscenas = 1;
+    
+   
+    
 
     public int getNumLineaElementos() {
         return numLineaElementos;
@@ -226,7 +230,9 @@ public class Controlador {
     }
 
     public String getVideoName() {
-        return controles.getVideoName();
+        String name = controles.getVideoName();
+        name = name.substring(name.length() - 10);
+        return name;
     }
 
     public void addRowElementos(Object object) {
@@ -266,12 +272,12 @@ public class Controlador {
     }
 
     public void addRowEscenas(Object object) {
-        tabla_personajes.setRow(object);
+        tabla_escenas.setRow(object);
     }
 
     public void getRowsEscenas(int numFila, String tiempo) {
         numFila = numFila - 2;
-        tabla_personajes.getRow(numFila, tiempo);
+        tabla_escenas.getRow(numFila, tiempo);
     }
 
     public void addRowZonas(Object object) {
@@ -332,7 +338,7 @@ public class Controlador {
     }
 
     private void leeElementos() {
-        String fichero = "C:\\Users\\Practicas\\Desktop\\elementos.txt";
+        String fichero = "C:\\Users\\Sociograph\\Desktop\\elementos.txt";
         try {
 
             FileReader fr = new FileReader(fichero);
@@ -349,7 +355,7 @@ public class Controlador {
     }
 
     private void leeZonas() {
-        String fichero = "C:\\Users\\Practicas\\Desktop\\zonas.txt";
+        String fichero = "C:\\Users\\Sociograph\\Desktop\\zonas.txt";
         try {
             FileReader fr = new FileReader(fichero);
             BufferedReader br = new BufferedReader(fr);
@@ -365,7 +371,7 @@ public class Controlador {
     }
 
     private void leePersonajes() {
-        String fichero = "C:\\Users\\Practicas\\Desktop\\personajes.txt";
+        String fichero = "C:\\Users\\Sociograph\\Desktop\\personajes.txt";
         try {
 
             FileReader fr = new FileReader(fichero);
@@ -383,7 +389,7 @@ public class Controlador {
     }
 
     private void leeTramas() {
-        String fichero = "C:\\Users\\Practicas\\Desktop\\tramas.txt";
+        String fichero = "C:\\Users\\Sociograph\\Desktop\\tramas.txt";
         try {
 
             FileReader fr = new FileReader(fichero);
@@ -400,7 +406,7 @@ public class Controlador {
     }
 
     private void leeSecuencias() {
-        String fichero = "C:\\Users\\Practicas\\Desktop\\secuencias.txt";
+        String fichero = "C:\\Users\\Sociograph\\Desktop\\secuencias.txt";
         try {
 
             FileReader fr = new FileReader(fichero);
@@ -417,7 +423,7 @@ public class Controlador {
     }
 
     private void leeEscenas() {
-        String fichero = "C:\\Users\\Practicas\\Desktop\\escenas.txt";
+        String fichero = "C:\\Users\\Sociograph\\Desktop\\escenas.txt";
         try {
 
             FileReader fr = new FileReader(fichero);
@@ -516,17 +522,17 @@ public class Controlador {
         tabla_zonas.setFinElemento(linea);
     }
 
-      public void setFinSecuencias(int linea) {
+    public void setFinSecuencias(int linea) {
         tabla_secuencias.setFinElemento(linea);
     }
-        public void setFinSPersonajes(int linea) {
+
+    public void setFinSPersonajes(int linea) {
         tabla_personajes.setFinElemento(linea);
     }
-          public void setFinTramas(int linea) {
+
+    public void setFinTramas(int linea) {
         tabla_tramas.setFinElemento(linea);
     }
-    
- 
 
     public void setFinEscenas(int linea) {
         tabla_escenas.setFinElemento(linea);
@@ -539,19 +545,26 @@ public class Controlador {
     public JTable getTablaZonas() {
         return tabla_zonas.getTabla();
     }
-    
-    
-     public JTable getTablaPersonajes() {
+
+    public JTable getTablaPersonajes() {
         return tabla_personajes.getTabla();
     }
-      public JTable getTablaTramas() {
+
+    public JTable getTablaTramas() {
         return tabla_tramas.getTabla();
     }
-       public JTable getTablaSecuencias() {
+
+    public JTable getTablaSecuencias() {
         return tabla_secuencias.getTabla();
     }
-        public JTable getTablaEscenas() {
+
+    public JTable getTablaEscenas() {
         return tabla_escenas.getTabla();
     }
 
+    public void showDialog(String texto) {
+        JOptionPane.showMessageDialog(mainFrame, texto);
+    }
+    
+    
 }
