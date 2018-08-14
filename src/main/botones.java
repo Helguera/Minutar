@@ -9,6 +9,7 @@ import java.awt.Component;
 import static java.awt.Label.CENTER;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -47,7 +48,8 @@ public class botones extends javax.swing.JPanel {
     private String lastButton2 = null;
     private String lastButton3 = null;
     private int delay = 0;
-    
+
+    private int num_videos = 0;
     private int suma = 610;
 
     /**
@@ -417,10 +419,17 @@ public class botones extends javax.swing.JPanel {
         //Idea: hacer un .csv para cada tabla.
         //Ver comentario de abajo (linea 466)
         boolean correcto = true;
+        
+        File directory = new File("./csv");
+        if (directory.exists()){ 
+        }else{
+            directory.mkdir();
+        }
+        
 
         //ELEMENTOS
         try {
-            
+
             JTable temp;
             PrintWriter writer;
             if (chk_elementos.isSelected()) {
@@ -433,11 +442,46 @@ public class botones extends javax.swing.JPanel {
 
                 for (int i = 0; i < temp.getRowCount(); i++) {
                     for (int j = 1; j < temp.getColumnCount()-1; j++) {
-                       
-                        writer.print(model.getValueAt(i, j));
-                        if (j != temp.getColumnCount() - 1) {
-                            writer.print(";");
+                        if (i > 0 && j == 1) {
+                            if (model.getValueAt(i, (temp.getColumnCount() - 1)).equals(model.getValueAt(i - 1, (temp.getColumnCount() - 1)))) {
+
+                            } else {
+                                num_videos++;
+                            }
+
                         }
+
+                        if (num_videos > 0) {
+
+                            if (j == 1) {
+                                writer.print(sumMarcaInicial(sumSeconds((String) (model.getValueAt(i, 1))), controlador.getMarcaInicialElementos()) + ";");
+                                writer.print(sumMarcaInicial(sumSeconds((String) (model.getValueAt(i, 2))), controlador.getMarcaInicialElementos()) + ";");
+                            } else {
+                                if (j > 2) {
+                                    writer.print(model.getValueAt(i, j));
+                                    if (j != temp.getColumnCount() - 1) {
+                                        writer.print(";");
+                                    }
+                                }
+                            }
+
+                        } else {
+                            if (j == 1) {
+                                writer.print(sumMarcaInicial((String)(model.getValueAt(i, 1)), controlador.getMarcaInicialElementos()) + ";");
+                                writer.print(sumMarcaInicial((String)(model.getValueAt(i, 2)), controlador.getMarcaInicialElementos()) + ";");
+                            } else {
+                                if (j > 2) {
+                                    writer.print(model.getValueAt(i, j));
+                                    if (j != temp.getColumnCount() - 1) {
+                                        writer.print(";");
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
                     }
                     writer.println();
                 }
@@ -447,7 +491,7 @@ public class botones extends javax.swing.JPanel {
             correcto = false;
             controlador.showDialog("No se ha podido exportar la tabla 'Elementos'");
         }
-        
+
         //ZONAS
         try {
             JTable temp;
@@ -462,10 +506,46 @@ public class botones extends javax.swing.JPanel {
 
                 for (int i = 0; i < temp.getRowCount(); i++) {
                     for (int j = 1; j < temp.getColumnCount()-1; j++) {
-                        writer.print(model.getValueAt(i, j));
-                        if (j != temp.getColumnCount() - 1) {
-                            writer.print(";");
+                        if (i > 0 && j == 1) {
+                            if (model.getValueAt(i, (temp.getColumnCount() - 1)).equals(model.getValueAt(i - 1, (temp.getColumnCount() - 1)))) {
+
+                            } else {
+                                num_videos++;
+                            }
+
                         }
+
+                        if (num_videos > 0) {
+
+                            if (j == 1) {
+                                writer.print(sumMarcaInicial(sumSeconds((String) (model.getValueAt(i, 1))), controlador.getMarcaInicialZonas()) + ";");
+                                writer.print(sumMarcaInicial(sumSeconds((String) (model.getValueAt(i, 2))), controlador.getMarcaInicialZonas()) + ";");
+                            } else {
+                                if (j > 2) {
+                                    writer.print(model.getValueAt(i, j));
+                                    if (j != temp.getColumnCount() - 1) {
+                                        writer.print(";");
+                                    }
+                                }
+                            }
+
+                        } else {
+                            if (j == 1) {
+                                writer.print(sumMarcaInicial((String)(model.getValueAt(i, 1)), controlador.getMarcaInicialZonas()) + ";");
+                                writer.print(sumMarcaInicial((String)(model.getValueAt(i, 2)), controlador.getMarcaInicialZonas()) + ";");
+                            } else {
+                                if (j > 2) {
+                                    writer.print(model.getValueAt(i, j));
+                                    if (j != temp.getColumnCount() - 1) {
+                                        writer.print(";");
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
                     }
                     writer.println();
                 }
@@ -475,7 +555,7 @@ public class botones extends javax.swing.JPanel {
             correcto = false;
             controlador.showDialog("No se ha podido exportar la tabla 'Zonas'");
         }
-        
+
         //PERSONAJES
         try {
             JTable temp;
@@ -503,7 +583,7 @@ public class botones extends javax.swing.JPanel {
             correcto = false;
             controlador.showDialog("No se ha podido exportar la tabla 'Personajes'");
         }
-        
+
         //TRAMAS
         try {
             JTable temp;
@@ -531,7 +611,7 @@ public class botones extends javax.swing.JPanel {
             correcto = false;
             controlador.showDialog("No se ha podido exportar la tabla 'Tramas'");
         }
-        
+
         //SECUENCIAS
         try {
             JTable temp;
@@ -559,7 +639,7 @@ public class botones extends javax.swing.JPanel {
             correcto = false;
             controlador.showDialog("No se ha podido exportar la tabla 'Secuencias'");
         }
-        
+
         //ESCENAS
         try {
             JTable temp;
@@ -587,10 +667,10 @@ public class botones extends javax.swing.JPanel {
             correcto = false;
             controlador.showDialog("No se ha podido exportar la tabla 'Escenas'");
         }
-        
-        if (correcto){
+
+        if (correcto) {
             controlador.showDialog("Exportado con éxito");
-            
+
         }
 
 
@@ -1004,6 +1084,47 @@ public class botones extends javax.swing.JPanel {
 
         }
         pnlEsc.setVisible(true);
+
+    }
+
+    private String sumSeconds(String time) {
+        int segundos = 0;
+        String[] tiempo = time.split(":");
+        segundos += Integer.parseInt(tiempo[2]);
+        segundos += Integer.parseInt(tiempo[1]) * 60;
+        segundos += Integer.parseInt(tiempo[0]) * 3600;
+        segundos = segundos + num_videos * suma;
+
+        String resultado = null;
+
+        int hours = (int) segundos / 3600;
+        int remainder = (int) segundos - hours * 3600;
+        int mins = remainder / 60;
+        remainder = remainder - mins * 60;
+        int secs = remainder;
+
+        resultado = hours + ":" + mins + ":" + secs;
+        return resultado;
+    }
+
+    private String sumMarcaInicial(String time, int seconds) {
+        String resultado = null;
+
+        int segundos = 0;
+        String[] tiempo = time.split(":");
+        segundos += Integer.parseInt(tiempo[2]);
+        segundos += Integer.parseInt(tiempo[1]) * 60;
+        segundos += Integer.parseInt(tiempo[0]) * 3600;
+        segundos -= seconds;
+
+        int hours = (int) segundos / 3600;
+        int remainder = (int) segundos - hours * 3600;
+        int mins = remainder / 60;
+        remainder = remainder - mins * 60;
+        int secs = remainder;
+
+        resultado = hours + ":" + mins + ":" + secs;
+        return resultado;
 
     }
 

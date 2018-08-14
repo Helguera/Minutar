@@ -69,9 +69,6 @@ public class Controlador {
     private int numLineaTramas = 1;
     private int numLineaSecuencias = 1;
     private int numLineaEscenas = 1;
-    
-   
-    
 
     public int getNumLineaElementos() {
         return numLineaElementos;
@@ -186,6 +183,7 @@ public class Controlador {
         tabla_escenas.cambiaTextoColumna();
 
         mainFrame = new JFrame();
+        mainFrame.setTitle("Minutator");
         split = new JSplitPane();
         split.setResizeWeight(0.9);
         split.setRightComponent(botones);
@@ -206,7 +204,7 @@ public class Controlador {
         mainFrame.setVisible(true);
 
         //embeddedMediaPlayer.playMedia("C:\\Users\\Sociograph\\Desktop\\23 julio_Gafa 14_Grupo 3\\MOVI0000.avi");
-        embeddedMediaPlayer.playMedia("images/logo.png");
+        embeddedMediaPlayer.playMedia("/images/logo.png");
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -338,7 +336,7 @@ public class Controlador {
     }
 
     private void leeElementos() {
-        String fichero = "C:\\Users\\Sociograph\\Desktop\\elementos.txt";
+        String fichero = "./elementos.txt";
         try {
 
             FileReader fr = new FileReader(fichero);
@@ -355,7 +353,7 @@ public class Controlador {
     }
 
     private void leeZonas() {
-        String fichero = "C:\\Users\\Sociograph\\Desktop\\zonas.txt";
+        String fichero = "./zonas.txt";
         try {
             FileReader fr = new FileReader(fichero);
             BufferedReader br = new BufferedReader(fr);
@@ -371,7 +369,7 @@ public class Controlador {
     }
 
     private void leePersonajes() {
-        String fichero = "C:\\Users\\Sociograph\\Desktop\\personajes.txt";
+        String fichero = "./personajes.txt";
         try {
 
             FileReader fr = new FileReader(fichero);
@@ -389,7 +387,7 @@ public class Controlador {
     }
 
     private void leeTramas() {
-        String fichero = "C:\\Users\\Sociograph\\Desktop\\tramas.txt";
+        String fichero = "./tramas.txt";
         try {
 
             FileReader fr = new FileReader(fichero);
@@ -406,7 +404,7 @@ public class Controlador {
     }
 
     private void leeSecuencias() {
-        String fichero = "C:\\Users\\Sociograph\\Desktop\\secuencias.txt";
+        String fichero = "./secuencias.txt";
         try {
 
             FileReader fr = new FileReader(fichero);
@@ -423,7 +421,7 @@ public class Controlador {
     }
 
     private void leeEscenas() {
-        String fichero = "C:\\Users\\Sociograph\\Desktop\\escenas.txt";
+        String fichero = "./escenas.txt";
         try {
 
             FileReader fr = new FileReader(fichero);
@@ -469,27 +467,27 @@ public class Controlador {
 
                 case "Elementos":
                     split.setLeftComponent(tabla_elementos);
-                    // tabla_activa = i;
+                    tabla_activa = 1;
                     break;
                 case "Zonas":
                     split.setLeftComponent(tabla_zonas);
-                    //  tabla_activa = i;
+                    tabla_activa = 2;
                     break;
                 case "Personajes":
                     split.setLeftComponent(tabla_personajes);
-                    //tabla_activa = i;
+                    tabla_activa = 3;
                     break;
                 case "Tramas":
                     split.setLeftComponent(tabla_tramas);
-                    //tabla_activa = i;
+                    tabla_activa = 4;
                     break;
                 case "Secuencias":
                     split.setLeftComponent(tabla_secuencias);
-                    //tabla_activa = i;
+                    tabla_activa = 5;
                     break;
                 case "Escenas":
                     split.setLeftComponent(tabla_escenas);
-                    //tabla_activa = i;
+                    tabla_activa = 6;
                     break;
                 default:
                     split.setLeftComponent(new JPanel());
@@ -565,6 +563,28 @@ public class Controlador {
     public void showDialog(String texto) {
         JOptionPane.showMessageDialog(mainFrame, texto);
     }
-    
-    
+
+    public int getMarcaInicialElementos() {
+        return tabla_elementos.getMarcaInicial();
+    }
+
+    public int getMarcaInicialZonas() {
+        return tabla_zonas.getMarcaInicial();
+    }
+
+    public int getMarcaInicialPersonajes() {
+        return tabla_personajes.getMarcaInicial();
+    }
+
+    public int getMarcaInicialTramas() {
+        return tabla_tramas.getMarcaInicial();
+    }
+
+    public int getMarcaInicialEscenas() {
+        return tabla_escenas.getMarcaInicial();
+    }
+
+    public int getMarcaInicialSecuencias() {
+        return tabla_secuencias.getMarcaInicial();
+    }
 }

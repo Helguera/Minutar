@@ -163,12 +163,12 @@ public class TablaSecEsc extends javax.swing.JPanel {
         int seleccionado = tabla.getSelectedRow();
         DefaultTableModel model = (DefaultTableModel) tabla.getModel();
 
-        if (controlador.getTablaActiva() == 0) {
+        if (controlador.getTablaActiva() == 5) {
             model.removeRow(seleccionado);
-            controlador.decrementaNumLineaElementos();
+            controlador.decrementaNumLineaSecuencias();
         } else {
             model.removeRow(seleccionado);
-            controlador.decrementaNumLineaZonas();
+            controlador.decrementaNumLineaEscenas();
         }
 
         reordenaIndices();
@@ -255,6 +255,10 @@ public class TablaSecEsc extends javax.swing.JPanel {
     
     public void setMarcaInicial(int marca_inicial) {
         this.marca_inicial = marca_inicial;
+    }
+    
+    public int getMarcaInicial() {
+        return marca_inicial;
     }
     
     private int toSeconds(String time) {

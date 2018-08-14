@@ -171,12 +171,12 @@ public class TablaPerTram extends javax.swing.JPanel {
         int seleccionado = tabla.getSelectedRow();
         DefaultTableModel model = (DefaultTableModel) tabla.getModel();
 
-        if (controlador.getTablaActiva() == 0) {
+        if (controlador.getTablaActiva() == 3) {
             model.removeRow(seleccionado);
-            controlador.decrementaNumLineaElementos();
+            controlador.decrementaNumLineaPersonajes();
         } else {
             model.removeRow(seleccionado);
-            controlador.decrementaNumLineaZonas();
+            controlador.decrementaNumLineaTramas();
         }
 
         reordenaIndices();
@@ -263,6 +263,10 @@ public class TablaPerTram extends javax.swing.JPanel {
     
     public void setMarcaInicial(int marca_inicial) {
         this.marca_inicial = marca_inicial;
+    }
+    
+    public int getMarcaInicial() {
+        return marca_inicial;
     }
     
     private int toSeconds(String time) {

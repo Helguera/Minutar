@@ -29,7 +29,6 @@ public class TablaElemZon extends javax.swing.JPanel {
     private JTable zonas;
     private int marca_inicial;
     private int num_video = -1;
-    private String last_vid = "";
 
     public int getNum_video() {
         return num_video;
@@ -189,7 +188,7 @@ public class TablaElemZon extends javax.swing.JPanel {
         int seleccionado = tabla.getSelectedRow();
         DefaultTableModel model = (DefaultTableModel) tabla.getModel();
 
-        if (controlador.getTablaActiva() == 0) {
+        if (controlador.getTablaActiva() == 1) {
             model.removeRow(seleccionado);
             controlador.decrementaNumLineaElementos();
         } else {
