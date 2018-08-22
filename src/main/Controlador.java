@@ -183,7 +183,7 @@ public class Controlador {
         tabla_escenas.cambiaTextoColumna();
 
         mainFrame = new JFrame();
-        mainFrame.setTitle("Minutator");
+        mainFrame.setTitle("Minutar");
         split = new JSplitPane();
         split.setResizeWeight(0.9);
         split.setRightComponent(botones);

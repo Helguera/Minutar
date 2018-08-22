@@ -65,8 +65,6 @@ public class TablaPerTram extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
-        addLinea = new javax.swing.JButton();
-        removeLinea = new javax.swing.JButton();
         marcaIncial = new javax.swing.JButton();
 
         setLayout(new java.awt.BorderLayout());
@@ -116,22 +114,6 @@ public class TablaPerTram extends javax.swing.JPanel {
 
         jPanel2.setLayout(new java.awt.GridLayout(1, 0));
 
-        addLinea.setText("Añadir línea");
-        addLinea.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addLineaActionPerformed(evt);
-            }
-        });
-        jPanel2.add(addLinea);
-
-        removeLinea.setText("Eliminar línea");
-        removeLinea.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removeLineaActionPerformed(evt);
-            }
-        });
-        jPanel2.add(removeLinea);
-
         marcaIncial.setText("Marca Inicial");
         marcaIncial.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -143,53 +125,6 @@ public class TablaPerTram extends javax.swing.JPanel {
         add(jPanel2, java.awt.BorderLayout.PAGE_END);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void addLineaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addLineaActionPerformed
-        // TODO add your handling code here:
-        int seleccionado = tabla.getSelectedRow();
-        DefaultTableModel model = (DefaultTableModel) tabla.getModel();
-
-        if (controlador.getTablaActiva() == 0) {
-            model.insertRow(seleccionado + 1, new Object[]{(controlador.getNumLineaElementos()), null, null, null});
-            controlador.incrementaNumLineaElementos();
-        } else {
-            model.insertRow(seleccionado + 1, new Object[]{(controlador.getNumLineaElementos()), null, null, null});
-            controlador.incrementaNumLineaZonas();
-        }
-        reordenaIndices();
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                JScrollBar sb = jScrollPane1.getVerticalScrollBar();
-                sb.setValue(sb.getMaximum());
-                jScrollPane1.repaint();
-                jScrollPane1.revalidate();
-            }
-        });
-    }//GEN-LAST:event_addLineaActionPerformed
-
-    private void removeLineaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeLineaActionPerformed
-        // TODO add your handling code here:
-        int seleccionado = tabla.getSelectedRow();
-        DefaultTableModel model = (DefaultTableModel) tabla.getModel();
-
-        if (controlador.getTablaActiva() == 3) {
-            model.removeRow(seleccionado);
-            controlador.decrementaNumLineaPersonajes();
-        } else {
-            model.removeRow(seleccionado);
-            controlador.decrementaNumLineaTramas();
-        }
-
-        reordenaIndices();
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                JScrollBar sb = jScrollPane1.getVerticalScrollBar();
-                sb.setValue(sb.getMaximum());
-                jScrollPane1.repaint();
-                jScrollPane1.revalidate();
-            }
-        });
-    }//GEN-LAST:event_removeLineaActionPerformed
-
     private void marcaIncialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_marcaIncialActionPerformed
         // TODO add your handling code here:
         marca_inicial = toSeconds(controlador.getTime());
@@ -197,11 +132,9 @@ public class TablaPerTram extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addLinea;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton marcaIncial;
-    private javax.swing.JButton removeLinea;
     private javax.swing.JTable tabla;
     // End of variables declaration//GEN-END:variables
 

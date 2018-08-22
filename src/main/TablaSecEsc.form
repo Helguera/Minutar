@@ -75,22 +75,6 @@
         <Property name="rows" type="int" value="1"/>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="addLinea">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="A&#xf1;adir l&#xed;nea"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addLineaActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="removeLinea">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Eliminar l&#xed;nea"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="removeLineaActionPerformed"/>
-          </Events>
-        </Component>
         <Component class="javax.swing.JButton" name="marcaIncial">
           <Properties>
             <Property name="text" type="java.lang.String" value="Marca Inicial"/>

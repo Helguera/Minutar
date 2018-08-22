@@ -105,6 +105,7 @@ public class botones extends javax.swing.JPanel {
         grupoS = new javax.swing.ButtonGroup();
         grupoE = new javax.swing.ButtonGroup();
         tabbed = new javax.swing.JTabbedPane();
+        scroll_config = new javax.swing.JScrollPane();
         pnlConfig = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
@@ -252,7 +253,9 @@ public class botones extends javax.swing.JPanel {
 
         pnlConfig.add(jPanel2, java.awt.BorderLayout.CENTER);
 
-        tabbed.addTab("Configuración", pnlConfig);
+        scroll_config.setViewportView(pnlConfig);
+
+        tabbed.addTab("Configuraciones", scroll_config);
 
         scroll_elementos.setName("Elementos"); // NOI18N
 
@@ -419,13 +422,12 @@ public class botones extends javax.swing.JPanel {
         //Idea: hacer un .csv para cada tabla.
         //Ver comentario de abajo (linea 466)
         boolean correcto = true;
-        
+
         File directory = new File("./csv");
-        if (directory.exists()){ 
-        }else{
+        if (directory.exists()) {
+        } else {
             directory.mkdir();
         }
-        
 
         //ELEMENTOS
         try {
@@ -441,7 +443,7 @@ public class botones extends javax.swing.JPanel {
                 writer.println("Inicio;Fin;Elemento");
 
                 for (int i = 0; i < temp.getRowCount(); i++) {
-                    for (int j = 1; j < temp.getColumnCount()-1; j++) {
+                    for (int j = 1; j < temp.getColumnCount() - 1; j++) {
                         if (i > 0 && j == 1) {
                             if (model.getValueAt(i, (temp.getColumnCount() - 1)).equals(model.getValueAt(i - 1, (temp.getColumnCount() - 1)))) {
 
@@ -467,8 +469,8 @@ public class botones extends javax.swing.JPanel {
 
                         } else {
                             if (j == 1) {
-                                writer.print(sumMarcaInicial((String)(model.getValueAt(i, 1)), controlador.getMarcaInicialElementos()) + ";");
-                                writer.print(sumMarcaInicial((String)(model.getValueAt(i, 2)), controlador.getMarcaInicialElementos()) + ";");
+                                writer.print(sumMarcaInicial((String) (model.getValueAt(i, 1)), controlador.getMarcaInicialElementos()) + ";");
+                                writer.print(sumMarcaInicial((String) (model.getValueAt(i, 2)), controlador.getMarcaInicialElementos()) + ";");
                             } else {
                                 if (j > 2) {
                                     writer.print(model.getValueAt(i, j));
@@ -505,7 +507,7 @@ public class botones extends javax.swing.JPanel {
                 writer.println("Inicio;Fin;Zona");
 
                 for (int i = 0; i < temp.getRowCount(); i++) {
-                    for (int j = 1; j < temp.getColumnCount()-1; j++) {
+                    for (int j = 1; j < temp.getColumnCount() - 1; j++) {
                         if (i > 0 && j == 1) {
                             if (model.getValueAt(i, (temp.getColumnCount() - 1)).equals(model.getValueAt(i - 1, (temp.getColumnCount() - 1)))) {
 
@@ -518,8 +520,12 @@ public class botones extends javax.swing.JPanel {
                         if (num_videos > 0) {
 
                             if (j == 1) {
-                                writer.print(sumMarcaInicial(sumSeconds((String) (model.getValueAt(i, 1))), controlador.getMarcaInicialZonas()) + ";");
-                                writer.print(sumMarcaInicial(sumSeconds((String) (model.getValueAt(i, 2))), controlador.getMarcaInicialZonas()) + ";");
+                                try {
+                                    writer.print(sumMarcaInicial(sumSeconds((String) (model.getValueAt(i, 1))), controlador.getMarcaInicialZonas()) + ";");
+                                    writer.print(sumMarcaInicial(sumSeconds((String) (model.getValueAt(i, 2))), controlador.getMarcaInicialZonas()) + ";");
+                                } catch (Exception e) {
+                                    writer.print(";");
+                                }
                             } else {
                                 if (j > 2) {
                                     writer.print(model.getValueAt(i, j));
@@ -531,8 +537,12 @@ public class botones extends javax.swing.JPanel {
 
                         } else {
                             if (j == 1) {
-                                writer.print(sumMarcaInicial((String)(model.getValueAt(i, 1)), controlador.getMarcaInicialZonas()) + ";");
-                                writer.print(sumMarcaInicial((String)(model.getValueAt(i, 2)), controlador.getMarcaInicialZonas()) + ";");
+                                try {
+                                    writer.print(sumMarcaInicial((String) (model.getValueAt(i, 1)), controlador.getMarcaInicialZonas()) + ";");
+                                    writer.print(sumMarcaInicial((String) (model.getValueAt(i, 2)), controlador.getMarcaInicialZonas()) + ";");
+                                } catch (Exception e) {
+                                    writer.print(";");
+                                }
                             } else {
                                 if (j > 2) {
                                     writer.print(model.getValueAt(i, j));
@@ -699,6 +709,7 @@ public class botones extends javax.swing.JPanel {
     private javax.swing.JPanel pnlSec;
     private javax.swing.JPanel pnlTra;
     private javax.swing.JPanel pnlZonas;
+    private javax.swing.JScrollPane scroll_config;
     private javax.swing.JScrollPane scroll_elementos;
     private javax.swing.JScrollPane scroll_escenas;
     private javax.swing.JScrollPane scroll_personajes;
