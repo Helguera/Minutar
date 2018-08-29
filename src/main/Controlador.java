@@ -203,8 +203,8 @@ public class Controlador {
         mainFrame.pack();
         mainFrame.setVisible(true);
 
-        //embeddedMediaPlayer.playMedia("C:\\Users\\Sociograph\\Desktop\\23 julio_Gafa 14_Grupo 3\\MOVI0000.avi");
-        embeddedMediaPlayer.playMedia("/images/logo.png");
+        //embeddedMediaPlayer.playMedia("C:\\Users\\Sociograph\\Desktop\\23 julio_Gafa 14_Grupo 3\\MOVI0003.avi"); //debug
+        //embeddedMediaPlayer.playMedia("/images/logo.png");
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);

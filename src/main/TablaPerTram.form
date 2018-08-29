@@ -34,9 +34,9 @@
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="4" rowCount="0">
                 <Column editable="false" title="N&#xba;" type="java.lang.Integer"/>
+                <Column editable="true" title="Personaje" type="java.lang.String"/>
                 <Column editable="true" title="Inicio" type="java.lang.String"/>
                 <Column editable="true" title="Fin" type="java.lang.String"/>
-                <Column editable="true" title="Personaje" type="java.lang.String"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -46,17 +46,17 @@
                   <Editor/>
                   <Renderer/>
                 </Column>
-                <Column maxWidth="70" minWidth="70" prefWidth="70" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="70" minWidth="70" prefWidth="70" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="70" minWidth="70" prefWidth="70" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="70" minWidth="70" prefWidth="70" resizable="true">
                   <Title/>
                   <Editor/>
                   <Renderer/>

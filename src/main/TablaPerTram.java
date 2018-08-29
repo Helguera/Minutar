@@ -75,7 +75,7 @@ public class TablaPerTram extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Nº", "Inicio", "Fin", "Personaje"
+                "Nº", "Personaje", "Inicio", "Fin"
             }
         ) {
             Class[] types = new Class [] {
@@ -102,12 +102,12 @@ public class TablaPerTram extends javax.swing.JPanel {
             tabla.getColumnModel().getColumn(0).setMinWidth(35);
             tabla.getColumnModel().getColumn(0).setPreferredWidth(35);
             tabla.getColumnModel().getColumn(0).setMaxWidth(35);
-            tabla.getColumnModel().getColumn(1).setMinWidth(70);
-            tabla.getColumnModel().getColumn(1).setPreferredWidth(70);
-            tabla.getColumnModel().getColumn(1).setMaxWidth(70);
             tabla.getColumnModel().getColumn(2).setMinWidth(70);
             tabla.getColumnModel().getColumn(2).setPreferredWidth(70);
             tabla.getColumnModel().getColumn(2).setMaxWidth(70);
+            tabla.getColumnModel().getColumn(3).setMinWidth(70);
+            tabla.getColumnModel().getColumn(3).setPreferredWidth(70);
+            tabla.getColumnModel().getColumn(3).setMaxWidth(70);
         }
 
         add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -177,7 +177,7 @@ public class TablaPerTram extends javax.swing.JPanel {
         System.out.println("LA LINEA ES " + linea);
         model.setValueAt(linea, linea - 1, 0);
         model.setValueAt(model.getValueAt(linea - 1, 1), linea - 1, 1);
-        model.setValueAt(controlador.getTime(), linea - 1, 2);
+        model.setValueAt(controlador.getTime(), linea - 1, 3);
         model.setValueAt(model.getValueAt(linea - 1, 3), linea - 1, 3);
 
     }

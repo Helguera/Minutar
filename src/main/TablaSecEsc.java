@@ -170,7 +170,7 @@ public class TablaSecEsc extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel) tabla.getModel();
         System.out.println("LA LINEA ES " + linea);
         model.setValueAt(linea, linea - 1, 0);
-        model.setValueAt(controlador.getTime(), linea - 1, 1);
+        model.setValueAt(controlador.getTime(), linea - 1, 2);
         //model.setValueAt(controlador.getTime(), linea - 1, 2);
         //model.setValueAt(model.getValueAt(linea - 1, 3), linea - 1, 3);
 

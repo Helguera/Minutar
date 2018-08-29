@@ -49,7 +49,8 @@ public class botones extends javax.swing.JPanel {
     private String lastButton3 = null;
     private int delay = 0;
 
-    private int num_videos = 0;
+    private int num_videos_elementos = 0;
+    private int num_videos_zonas = 0;
     private int suma = 610;
 
     /**
@@ -431,60 +432,47 @@ public class botones extends javax.swing.JPanel {
 
         //ELEMENTOS
         try {
-
             JTable temp;
             PrintWriter writer;
             if (chk_elementos.isSelected()) {
                 temp = controlador.getTablaElementos();
-                DefaultTableModel model = (DefaultTableModel) temp.getModel();
+                DefaultTableModel model;
                 model = (DefaultTableModel) temp.getModel();
 
                 writer = new PrintWriter("./csv/elementos.csv", "ISO-8859-1");
-                writer.println("Inicio;Fin;Elemento");
+                writer.println("Elemento;Inicio;Fin");
 
                 for (int i = 0; i < temp.getRowCount(); i++) {
-                    for (int j = 1; j < temp.getColumnCount() - 1; j++) {
-                        if (i > 0 && j == 1) {
-                            if (model.getValueAt(i, (temp.getColumnCount() - 1)).equals(model.getValueAt(i - 1, (temp.getColumnCount() - 1)))) {
 
-                            } else {
-                                num_videos++;
-                            }
-
-                        }
-
-                        if (num_videos > 0) {
-
-                            if (j == 1) {
-                                writer.print(sumMarcaInicial(sumSeconds((String) (model.getValueAt(i, 1))), controlador.getMarcaInicialElementos()) + ";");
-                                writer.print(sumMarcaInicial(sumSeconds((String) (model.getValueAt(i, 2))), controlador.getMarcaInicialElementos()) + ";");
-                            } else {
-                                if (j > 2) {
-                                    writer.print(model.getValueAt(i, j));
-                                    if (j != temp.getColumnCount() - 1) {
-                                        writer.print(";");
-                                    }
-                                }
-                            }
+                    if (i > 0) {
+                        if (model.getValueAt(i, (temp.getColumnCount() - 1)).equals(model.getValueAt(i - 1, (temp.getColumnCount() - 1)))) {
 
                         } else {
-                            if (j == 1) {
-                                writer.print(sumMarcaInicial((String) (model.getValueAt(i, 1)), controlador.getMarcaInicialElementos()) + ";");
-                                writer.print(sumMarcaInicial((String) (model.getValueAt(i, 2)), controlador.getMarcaInicialElementos()) + ";");
-                            } else {
-                                if (j > 2) {
-                                    writer.print(model.getValueAt(i, j));
-                                    if (j != temp.getColumnCount() - 1) {
-                                        writer.print(";");
-                                    }
-
-                                }
-
-                            }
-
+                            num_videos_elementos++;
                         }
 
                     }
+
+                    if (num_videos_elementos > 0) {
+                        writer.print(model.getValueAt(i, 1));
+                        writer.print(";");
+
+                        try {
+                            writer.print(sumMarcaInicial(sumSecondsElementos((String) (model.getValueAt(i, 2))), controlador.getMarcaInicialElementos()) + ";");
+                            writer.print(sumMarcaInicial(sumSecondsElementos((String) (model.getValueAt(i, 3))), controlador.getMarcaInicialElementos()));
+                        } catch (Exception e) {
+                            writer.print(";");
+                        }
+
+                    } else {
+                        writer.print(model.getValueAt(i, 1));
+                        writer.print(";");
+
+                        writer.print(sumMarcaInicial((String) (model.getValueAt(i, 2)), controlador.getMarcaInicialElementos()) + ";");
+                        writer.print(sumMarcaInicial((String) (model.getValueAt(i, 3)), controlador.getMarcaInicialElementos()));
+
+                    }
+
                     writer.println();
                 }
                 writer.close();
@@ -504,63 +492,44 @@ public class botones extends javax.swing.JPanel {
                 model = (DefaultTableModel) temp.getModel();
 
                 writer = new PrintWriter("./csv/zonas.csv", "ISO-8859-1");
-                writer.println("Inicio;Fin;Zona");
+                writer.println("Zona;Inicio;Fin");
 
                 for (int i = 0; i < temp.getRowCount(); i++) {
-                    for (int j = 1; j < temp.getColumnCount() - 1; j++) {
-                        if (i > 0 && j == 1) {
-                            if (model.getValueAt(i, (temp.getColumnCount() - 1)).equals(model.getValueAt(i - 1, (temp.getColumnCount() - 1)))) {
 
-                            } else {
-                                num_videos++;
-                            }
-
-                        }
-
-                        if (num_videos > 0) {
-
-                            if (j == 1) {
-                                try {
-                                    writer.print(sumMarcaInicial(sumSeconds((String) (model.getValueAt(i, 1))), controlador.getMarcaInicialZonas()) + ";");
-                                    writer.print(sumMarcaInicial(sumSeconds((String) (model.getValueAt(i, 2))), controlador.getMarcaInicialZonas()) + ";");
-                                } catch (Exception e) {
-                                    writer.print(";");
-                                }
-                            } else {
-                                if (j > 2) {
-                                    writer.print(model.getValueAt(i, j));
-                                    if (j != temp.getColumnCount() - 1) {
-                                        writer.print(";");
-                                    }
-                                }
-                            }
+                    if (i == 1) {
+                        if (model.getValueAt(i, (temp.getColumnCount() - 1)).equals(model.getValueAt(i - 1, (temp.getColumnCount() - 1)))) {
 
                         } else {
-                            if (j == 1) {
-                                try {
-                                    writer.print(sumMarcaInicial((String) (model.getValueAt(i, 1)), controlador.getMarcaInicialZonas()) + ";");
-                                    writer.print(sumMarcaInicial((String) (model.getValueAt(i, 2)), controlador.getMarcaInicialZonas()) + ";");
-                                } catch (Exception e) {
-                                    writer.print(";");
-                                }
-                            } else {
-                                if (j > 2) {
-                                    writer.print(model.getValueAt(i, j));
-                                    if (j != temp.getColumnCount() - 1) {
-                                        writer.print(";");
-                                    }
-
-                                }
-
-                            }
-
+                            num_videos_zonas++;
                         }
 
                     }
+
+                    if (num_videos_zonas > 0) {
+                        writer.print(model.getValueAt(i, 1));
+                        writer.print(";");
+
+                        try {
+                            writer.print(sumMarcaInicial(sumSecondsZonas((String) (model.getValueAt(i, 2))), controlador.getMarcaInicialZonas()) + ";");
+                            writer.print(sumMarcaInicial(sumSecondsZonas((String) (model.getValueAt(i, 3))), controlador.getMarcaInicialZonas()));
+                        } catch (Exception e) {
+                            writer.print(";");
+                        }
+
+                    } else {
+                        writer.print(model.getValueAt(i, 1));
+                        writer.print(";");
+
+                        writer.print(sumMarcaInicial((String) (model.getValueAt(i, 2)), controlador.getMarcaInicialZonas()) + ";");
+                        writer.print(sumMarcaInicial((String) (model.getValueAt(i, 3)), controlador.getMarcaInicialZonas()));
+
+                    }
+
                     writer.println();
                 }
                 writer.close();
             }
+            
         } catch (Exception e) {
             correcto = false;
             controlador.showDialog("No se ha podido exportar la tabla 'Zonas'");
@@ -576,15 +545,13 @@ public class botones extends javax.swing.JPanel {
                 model = (DefaultTableModel) temp.getModel();
 
                 writer = new PrintWriter("./csv/personajes.csv", "ISO-8859-1");
-                writer.println("Inicio;Fin;Personaje");
+                writer.println("Personaje;Inicio;Fin");
 
                 for (int i = 0; i < temp.getRowCount(); i++) {
-                    for (int j = 1; j < temp.getColumnCount(); j++) {
-                        writer.print(model.getValueAt(i, j));
-                        if (j != temp.getColumnCount() - 1) {
-                            writer.print(";");
-                        }
-                    }
+                    writer.print(model.getValueAt(i, 1)+";");
+                    writer.print(model.getValueAt(i, 2)+";");
+                    writer.print(model.getValueAt(i, 3));
+                    
                     writer.println();
                 }
                 writer.close();
@@ -604,15 +571,12 @@ public class botones extends javax.swing.JPanel {
                 model = (DefaultTableModel) temp.getModel();
 
                 writer = new PrintWriter("./csv/tramas.csv", "ISO-8859-1");
-                writer.println("Inicio;Fin;Trama");
+                writer.println("Trama;Inicio;Fin");
 
                 for (int i = 0; i < temp.getRowCount(); i++) {
-                    for (int j = 1; j < temp.getColumnCount(); j++) {
-                        writer.print(model.getValueAt(i, j));
-                        if (j != temp.getColumnCount() - 1) {
-                            writer.print(";");
-                        }
-                    }
+                    writer.print(model.getValueAt(i, 1)+";");
+                    writer.print(model.getValueAt(i, 2)+";");
+                    writer.print(model.getValueAt(i, 3));
                     writer.println();
                 }
                 writer.close();
@@ -632,10 +596,10 @@ public class botones extends javax.swing.JPanel {
                 model = (DefaultTableModel) temp.getModel();
 
                 writer = new PrintWriter("./csv/secuencias.csv", "ISO-8859-1");
-                writer.println("Número;Secuencia");
+                writer.println("Secuencia;Tiempo");
 
                 for (int i = 0; i < temp.getRowCount(); i++) {
-                    for (int j = 0; j < temp.getColumnCount(); j++) {
+                    for (int j = 1; j < temp.getColumnCount(); j++) {
                         writer.print(model.getValueAt(i, j));
                         if (j != temp.getColumnCount() - 1) {
                             writer.print(";");
@@ -660,10 +624,10 @@ public class botones extends javax.swing.JPanel {
                 model = (DefaultTableModel) temp.getModel();
 
                 writer = new PrintWriter("./csv/escenas.csv", "ISO-8859-1");
-                writer.println("Número;Escena");
+                writer.println("Escena;Tiempo");
 
                 for (int i = 0; i < temp.getRowCount(); i++) {
-                    for (int j = 0; j < temp.getColumnCount(); j++) {
+                    for (int j = 1; j < temp.getColumnCount(); j++) {
                         writer.print(model.getValueAt(i, j));
                         if (j != temp.getColumnCount() - 1) {
                             writer.print(";");
@@ -748,7 +712,7 @@ public class botones extends javax.swing.JPanel {
                     //Hay que tener en cuenta que al cambiar de vídeo el tiempo no es el de ese video sino el del anterior mas diezxsegundos menos la marca inicial
                     //Esto quizá sea más conveniente hcerlo en el csv exporter para que se puedan ver los tiempos con más exactitud en las tablas.
                     //Si se hace en el .csv hay que habilitar una manera de poner la marca inicial
-                    controlador.addRowElementos(new Object[]{controlador.getNumLineaElementos(), controlador.getTime(), "", comp[pos + 1].getName(), controlador.getVideoName()});
+                    controlador.addRowElementos(new Object[]{controlador.getNumLineaElementos(), comp[pos + 1].getName(), controlador.getTime(), "", controlador.getVideoName()});
                     controlador.incrementaNumLineaElementos();
 
                 } else {
@@ -807,7 +771,7 @@ public class botones extends javax.swing.JPanel {
                          y al despulsarse se elimina, teniendo siempre acceso a que línea hay que modificar en función del botón pulsado
                          Queda ver donde va mejor este mapa, en principio la idea es en controlador*/
                     controlador.getLineaBoton().put(boton.getName(), controlador.getNumLineaZonas());
-                    controlador.addRowZonas(new Object[]{controlador.getNumLineaZonas(), comp[pos + 0].getName(), controlador.getTime(), "" , controlador.getVideoName()});
+                    controlador.addRowZonas(new Object[]{controlador.getNumLineaZonas(), comp[pos + 0].getName(), controlador.getTime(), "", controlador.getVideoName()});
                     controlador.incrementaNumLineaZonas();
 
                     if (lastButton == null) {
@@ -877,7 +841,7 @@ public class botones extends javax.swing.JPanel {
                          Queda ver donde va mejor este mapa, en principio la idea es en controlador*/
                     boton.setText("Fin");
                     controlador.getLineaBoton().put(boton.getName(), controlador.getNumLineaPersonajes());
-                    controlador.addRowPersonajes(new Object[]{controlador.getNumLineaPersonajes(), controlador.getTime(), "", comp[pos + 1].getName()});
+                    controlador.addRowPersonajes(new Object[]{controlador.getNumLineaPersonajes(), comp[pos + 1].getName(), controlador.getTime(),""});
                     controlador.incrementaNumLineaPersonajes();
 
                 } else {
@@ -935,7 +899,7 @@ public class botones extends javax.swing.JPanel {
                          Queda ver donde va mejor este mapa, en principio la idea es en controlador*/
                     boton.setText("Fin");
                     controlador.getLineaBoton().put(boton.getName(), controlador.getNumLineaTramas());
-                    controlador.addRowTramas(new Object[]{controlador.getNumLineaTramas(), controlador.getTime(), "", comp[pos + 1].getName()});
+                    controlador.addRowTramas(new Object[]{controlador.getNumLineaTramas(), comp[pos + 1].getName(), controlador.getTime(),""});
                     controlador.incrementaNumLineaTramas();
 
                 } else {
@@ -1020,7 +984,6 @@ public class botones extends javax.swing.JPanel {
                     lastButton2 = boton.getName();
 
                 } else {
-                    System.out.println("fafasf");
                     Iterator it = controlador.getLineaBoton().entrySet().iterator();
                     while (it.hasNext()) {
                         Map.Entry pair = (Map.Entry) it.next();
@@ -1065,7 +1028,7 @@ public class botones extends javax.swing.JPanel {
                          y al despulsarse se elimina, teniendo siempre acceso a que línea hay que modificar en función del botón pulsado
                          Queda ver donde va mejor este mapa, en principio la idea es en controlador*/
                     controlador.getLineaBoton().put(boton.getName(), controlador.getNumLineaEscenas());
-                    controlador.addRowEscenas(new Object[]{controlador.getNumLineaEscenas(), controlador.getTime(), "", comp[pos + 0].getName()});
+                    controlador.addRowEscenas(new Object[]{controlador.getNumLineaEscenas(), comp[pos + 0].getName(), controlador.getTime()});
                     controlador.incrementaNumLineaEscenas();
 
                     if (lastButton3 == null) {
@@ -1098,15 +1061,35 @@ public class botones extends javax.swing.JPanel {
 
     }
 
-    private String sumSeconds(String time) {
+    private String sumSecondsElementos(String time) {
         int segundos = 0;
         String[] tiempo = time.split(":");
         segundos += Integer.parseInt(tiempo[2]);
         segundos += Integer.parseInt(tiempo[1]) * 60;
         segundos += Integer.parseInt(tiempo[0]) * 3600;
-        segundos = segundos + num_videos * suma;
+        segundos = segundos + num_videos_elementos * suma;
 
-        String resultado = null;
+        String resultado;
+
+        int hours = (int) segundos / 3600;
+        int remainder = (int) segundos - hours * 3600;
+        int mins = remainder / 60;
+        remainder = remainder - mins * 60;
+        int secs = remainder;
+
+        resultado = hours + ":" + mins + ":" + secs;
+        return resultado;
+    }
+    
+    private String sumSecondsZonas(String time) {
+        int segundos = 0;
+        String[] tiempo = time.split(":");
+        segundos += Integer.parseInt(tiempo[2]);
+        segundos += Integer.parseInt(tiempo[1]) * 60;
+        segundos += Integer.parseInt(tiempo[0]) * 3600;
+        segundos = segundos + num_videos_zonas * suma;
+
+        String resultado;
 
         int hours = (int) segundos / 3600;
         int remainder = (int) segundos - hours * 3600;
