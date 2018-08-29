@@ -807,7 +807,7 @@ public class botones extends javax.swing.JPanel {
                          y al despulsarse se elimina, teniendo siempre acceso a que línea hay que modificar en función del botón pulsado
                          Queda ver donde va mejor este mapa, en principio la idea es en controlador*/
                     controlador.getLineaBoton().put(boton.getName(), controlador.getNumLineaZonas());
-                    controlador.addRowZonas(new Object[]{controlador.getNumLineaZonas(), controlador.getTime(), "", comp[pos + 0].getName(), controlador.getVideoName()});
+                    controlador.addRowZonas(new Object[]{controlador.getNumLineaZonas(), comp[pos + 0].getName(), controlador.getTime(), "" , controlador.getVideoName()});
                     controlador.incrementaNumLineaZonas();
 
                     if (lastButton == null) {
@@ -994,7 +994,7 @@ public class botones extends javax.swing.JPanel {
                          y al despulsarse se elimina, teniendo siempre acceso a que línea hay que modificar en función del botón pulsado
                          Queda ver donde va mejor este mapa, en principio la idea es en controlador*/
                     controlador.getLineaBoton().put(boton.getName(), controlador.getNumLineaSecuencias());
-                    controlador.addRowSecuencias(new Object[]{controlador.getNumLineaSecuencias(), controlador.getTime(), "", comp[pos + 0].getName()});
+                    controlador.addRowSecuencias(new Object[]{controlador.getNumLineaSecuencias(), comp[pos + 0].getName(), controlador.getTime()});
                     controlador.incrementaNumLineaSecuencias();
 
                     if (lastButton2 == null) {

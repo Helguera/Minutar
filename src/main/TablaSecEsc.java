@@ -73,14 +73,14 @@ public class TablaSecEsc extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Nº", "Secuencia"
+                "Nº", "Secuencia", "Tiempo"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true
+                false, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -100,6 +100,8 @@ public class TablaSecEsc extends javax.swing.JPanel {
             tabla.getColumnModel().getColumn(0).setMinWidth(35);
             tabla.getColumnModel().getColumn(0).setPreferredWidth(35);
             tabla.getColumnModel().getColumn(0).setMaxWidth(35);
+            tabla.getColumnModel().getColumn(1).setResizable(false);
+            tabla.getColumnModel().getColumn(2).setResizable(false);
         }
 
         add(jScrollPane1, java.awt.BorderLayout.CENTER);
