@@ -529,7 +529,7 @@ public class botones extends javax.swing.JPanel {
                 }
                 writer.close();
             }
-            
+
         } catch (Exception e) {
             correcto = false;
             controlador.showDialog("No se ha podido exportar la tabla 'Zonas'");
@@ -548,10 +548,10 @@ public class botones extends javax.swing.JPanel {
                 writer.println("Personaje;Inicio;Fin");
 
                 for (int i = 0; i < temp.getRowCount(); i++) {
-                    writer.print(model.getValueAt(i, 1)+";");
-                    writer.print(model.getValueAt(i, 2)+";");
+                    writer.print(model.getValueAt(i, 1) + ";");
+                    writer.print(model.getValueAt(i, 2) + ";");
                     writer.print(model.getValueAt(i, 3));
-                    
+
                     writer.println();
                 }
                 writer.close();
@@ -574,8 +574,8 @@ public class botones extends javax.swing.JPanel {
                 writer.println("Trama;Inicio;Fin");
 
                 for (int i = 0; i < temp.getRowCount(); i++) {
-                    writer.print(model.getValueAt(i, 1)+";");
-                    writer.print(model.getValueAt(i, 2)+";");
+                    writer.print(model.getValueAt(i, 1) + ";");
+                    writer.print(model.getValueAt(i, 2) + ";");
                     writer.print(model.getValueAt(i, 3));
                     writer.println();
                 }
@@ -841,7 +841,7 @@ public class botones extends javax.swing.JPanel {
                          Queda ver donde va mejor este mapa, en principio la idea es en controlador*/
                     boton.setText("Fin");
                     controlador.getLineaBoton().put(boton.getName(), controlador.getNumLineaPersonajes());
-                    controlador.addRowPersonajes(new Object[]{controlador.getNumLineaPersonajes(), comp[pos + 1].getName(), controlador.getTime(),""});
+                    controlador.addRowPersonajes(new Object[]{controlador.getNumLineaPersonajes(), comp[pos + 1].getName(), controlador.getTime(), ""});
                     controlador.incrementaNumLineaPersonajes();
 
                 } else {
@@ -899,7 +899,7 @@ public class botones extends javax.swing.JPanel {
                          Queda ver donde va mejor este mapa, en principio la idea es en controlador*/
                     boton.setText("Fin");
                     controlador.getLineaBoton().put(boton.getName(), controlador.getNumLineaTramas());
-                    controlador.addRowTramas(new Object[]{controlador.getNumLineaTramas(), comp[pos + 1].getName(), controlador.getTime(),""});
+                    controlador.addRowTramas(new Object[]{controlador.getNumLineaTramas(), comp[pos + 1].getName(), controlador.getTime(), ""});
                     controlador.incrementaNumLineaTramas();
 
                 } else {
@@ -1080,7 +1080,7 @@ public class botones extends javax.swing.JPanel {
         resultado = hours + ":" + mins + ":" + secs;
         return resultado;
     }
-    
+
     private String sumSecondsZonas(String time) {
         int segundos = 0;
         String[] tiempo = time.split(":");
@@ -1117,7 +1117,22 @@ public class botones extends javax.swing.JPanel {
         remainder = remainder - mins * 60;
         int secs = remainder;
 
-        resultado = hours + ":" + mins + ":" + secs;
+        if (mins < 10 || secs < 10) {
+            if (mins < 10 && secs < 10) {
+                resultado = hours + ":0" + mins + ":0" + secs;
+            } else {
+                if (mins < 10) {
+                    resultado = hours + ":0" + mins + ":" + secs;
+                }
+                if (secs < 10) {
+                    resultado = hours + ":" + mins + ":0" + secs;
+                }
+            }
+
+        } else {
+            resultado = hours + ":" + mins + ":" + secs;
+        }
+
         return resultado;
 
     }
