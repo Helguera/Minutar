@@ -190,7 +190,17 @@ public class Controlador {
         split.setLeftComponent(new JPanel());
 
         //Colocar las ventanas en el frame original con el border layout
-        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        
+        mainFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                close();
+            }
+        });
+        
+        
+        
         mainFrame.setLayout(new BorderLayout());
         mainFrame.setBackground(Color.black);
         mainFrame.add(videoSurface, BorderLayout.NORTH);
@@ -211,6 +221,12 @@ public class Controlador {
         mainFrame.setVisible(true);
 
     }
+    
+    private void close(){
+        if (JOptionPane.showConfirmDialog(mainFrame, "¿Está seguro que desea salir?",
+                "Salir del sistema", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+            System.exit(0);
+    } 
 
     public Controlador(Controles controles) {
         this.controles = controles;
@@ -464,7 +480,6 @@ public class Controlador {
     public void cambiaTabla(String i) {
         try {
             switch (i) {
-
                 case "Elementos":
                     split.setLeftComponent(tabla_elementos);
                     tabla_activa = 1;

@@ -43,10 +43,13 @@ public class TablaSecEsc extends javax.swing.JPanel {
         //Centrar los elementos de la tabla
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.LEFT);
-        
-        centerRenderer.setHorizontalAlignment(JLabel.LEFT);
+        //tabla.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+        centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.RIGHT);
         tabla.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
         centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.RIGHT);
+        tabla.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
         
 
     }
@@ -101,7 +104,9 @@ public class TablaSecEsc extends javax.swing.JPanel {
             tabla.getColumnModel().getColumn(0).setPreferredWidth(35);
             tabla.getColumnModel().getColumn(0).setMaxWidth(35);
             tabla.getColumnModel().getColumn(1).setResizable(false);
-            tabla.getColumnModel().getColumn(2).setResizable(false);
+            tabla.getColumnModel().getColumn(2).setMinWidth(75);
+            tabla.getColumnModel().getColumn(2).setPreferredWidth(75);
+            tabla.getColumnModel().getColumn(2).setMaxWidth(75);
         }
 
         add(jScrollPane1, java.awt.BorderLayout.CENTER);

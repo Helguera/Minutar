@@ -141,6 +141,8 @@ public class botones extends javax.swing.JPanel {
             }
         });
 
+        scroll_config.setName("config"); // NOI18N
+
         pnlConfig.setName("config"); // NOI18N
         pnlConfig.setLayout(new java.awt.BorderLayout());
 
@@ -440,7 +442,6 @@ public class botones extends javax.swing.JPanel {
                 model = (DefaultTableModel) temp.getModel();
 
                 writer = new PrintWriter("./csv/elementos.csv", "ISO-8859-1");
-                writer.println("Elemento;Inicio;Fin");
 
                 for (int i = 0; i < temp.getRowCount(); i++) {
 
@@ -492,11 +493,10 @@ public class botones extends javax.swing.JPanel {
                 model = (DefaultTableModel) temp.getModel();
 
                 writer = new PrintWriter("./csv/zonas.csv", "ISO-8859-1");
-                writer.println("Zona;Inicio;Fin");
 
                 for (int i = 0; i < temp.getRowCount(); i++) {
 
-                    if (i == 1) {
+                    if (i > 1) {
                         if (model.getValueAt(i, (temp.getColumnCount() - 1)).equals(model.getValueAt(i - 1, (temp.getColumnCount() - 1)))) {
 
                         } else {
@@ -545,7 +545,6 @@ public class botones extends javax.swing.JPanel {
                 model = (DefaultTableModel) temp.getModel();
 
                 writer = new PrintWriter("./csv/personajes.csv", "ISO-8859-1");
-                writer.println("Personaje;Inicio;Fin");
 
                 for (int i = 0; i < temp.getRowCount(); i++) {
                     writer.print(model.getValueAt(i, 1) + ";");
@@ -571,7 +570,6 @@ public class botones extends javax.swing.JPanel {
                 model = (DefaultTableModel) temp.getModel();
 
                 writer = new PrintWriter("./csv/tramas.csv", "ISO-8859-1");
-                writer.println("Trama;Inicio;Fin");
 
                 for (int i = 0; i < temp.getRowCount(); i++) {
                     writer.print(model.getValueAt(i, 1) + ";");
@@ -596,7 +594,6 @@ public class botones extends javax.swing.JPanel {
                 model = (DefaultTableModel) temp.getModel();
 
                 writer = new PrintWriter("./csv/secuencias.csv", "ISO-8859-1");
-                writer.println("Secuencia;Tiempo");
 
                 for (int i = 0; i < temp.getRowCount(); i++) {
                     for (int j = 1; j < temp.getColumnCount(); j++) {
@@ -624,7 +621,6 @@ public class botones extends javax.swing.JPanel {
                 model = (DefaultTableModel) temp.getModel();
 
                 writer = new PrintWriter("./csv/escenas.csv", "ISO-8859-1");
-                writer.println("Escena;Tiempo");
 
                 for (int i = 0; i < temp.getRowCount(); i++) {
                     for (int j = 1; j < temp.getColumnCount(); j++) {
@@ -705,7 +701,7 @@ public class botones extends javax.swing.JPanel {
                          y al despulsarse se elimina, teniendo siempre acceso a que línea hay que modificar en función del botón pulsado
                          Queda ver donde va mejor este mapa, en principio la idea es en controlador*/
                     boton.setText("Fin");
-                    controlador.getLineaBoton().put(boton.getName(), controlador.getNumLineaElementos());
+                    controlador.getLineaBoton().put(boton.getName()+"E", controlador.getNumLineaElementos());
                     //Comprobar si el vídeo anterior (el que esta encima en la tabla es distinto. Si lo es, aumentar en 10 segundos el delay
                     //Hay que guardar el tiempo de la primera marcaa o introducirlo a mano para tener en cuenta eso a la hora de exportar el .csv
                     //El control de ajuste de tiempos se puede hacer aquí o a la hoa de exportar, donde resulte más sencillo
@@ -721,7 +717,7 @@ public class botones extends javax.swing.JPanel {
                     Iterator it = controlador.getLineaBoton().entrySet().iterator();
                     while (it.hasNext()) {
                         Map.Entry pair = (Map.Entry) it.next();
-                        if (pair.getKey().equals(boton.getName())) {
+                        if (pair.getKey().equals(boton.getName()+"E")) {
                             controlador.setFinElemento((int) pair.getValue());
                             controlador.getLineaBoton().remove(pair.getKey());
                             it.remove(); // avoids a ConcurrentModificationException
@@ -770,7 +766,7 @@ public class botones extends javax.swing.JPanel {
                          y como valor el número de línea asociado a ese botón, de tal forma que cuando se pulse se crea un nuevo par
                          y al despulsarse se elimina, teniendo siempre acceso a que línea hay que modificar en función del botón pulsado
                          Queda ver donde va mejor este mapa, en principio la idea es en controlador*/
-                    controlador.getLineaBoton().put(boton.getName(), controlador.getNumLineaZonas());
+                    controlador.getLineaBoton().put(boton.getName()+"Z", controlador.getNumLineaZonas());
                     controlador.addRowZonas(new Object[]{controlador.getNumLineaZonas(), comp[pos + 0].getName(), controlador.getTime(), "", controlador.getVideoName()});
                     controlador.incrementaNumLineaZonas();
 
@@ -801,7 +797,7 @@ public class botones extends javax.swing.JPanel {
                     Iterator it = controlador.getLineaBoton().entrySet().iterator();
                     while (it.hasNext()) {
                         Map.Entry pair = (Map.Entry) it.next();
-                        if (pair.getKey().equals(boton.getName())) {
+                        if (pair.getKey().equals(boton.getName()+"Z")) {
                             controlador.setFinZonas((int) pair.getValue());
                             controlador.getLineaBoton().remove(pair.getKey());
                             it.remove(); // avoids a ConcurrentModificationException
@@ -840,7 +836,7 @@ public class botones extends javax.swing.JPanel {
                          y al despulsarse se elimina, teniendo siempre acceso a que línea hay que modificar en función del botón pulsado
                          Queda ver donde va mejor este mapa, en principio la idea es en controlador*/
                     boton.setText("Fin");
-                    controlador.getLineaBoton().put(boton.getName(), controlador.getNumLineaPersonajes());
+                    controlador.getLineaBoton().put(boton.getName()+"P", controlador.getNumLineaPersonajes());
                     controlador.addRowPersonajes(new Object[]{controlador.getNumLineaPersonajes(), comp[pos + 1].getName(), controlador.getTime(), ""});
                     controlador.incrementaNumLineaPersonajes();
 
@@ -850,7 +846,7 @@ public class botones extends javax.swing.JPanel {
                     Iterator it = controlador.getLineaBoton().entrySet().iterator();
                     while (it.hasNext()) {
                         Map.Entry pair = (Map.Entry) it.next();
-                        if (pair.getKey().equals(boton.getName())) {
+                        if (pair.getKey().equals(boton.getName()+"P")) {
                             controlador.setFinSPersonajes((int) pair.getValue());
                             controlador.getLineaBoton().remove(pair.getKey());
                             it.remove(); // avoids a ConcurrentModificationException
@@ -898,7 +894,7 @@ public class botones extends javax.swing.JPanel {
                          y al despulsarse se elimina, teniendo siempre acceso a que línea hay que modificar en función del botón pulsado
                          Queda ver donde va mejor este mapa, en principio la idea es en controlador*/
                     boton.setText("Fin");
-                    controlador.getLineaBoton().put(boton.getName(), controlador.getNumLineaTramas());
+                    controlador.getLineaBoton().put(boton.getName()+"T", controlador.getNumLineaTramas());
                     controlador.addRowTramas(new Object[]{controlador.getNumLineaTramas(), comp[pos + 1].getName(), controlador.getTime(), ""});
                     controlador.incrementaNumLineaTramas();
 
@@ -908,7 +904,7 @@ public class botones extends javax.swing.JPanel {
                     Iterator it = controlador.getLineaBoton().entrySet().iterator();
                     while (it.hasNext()) {
                         Map.Entry pair = (Map.Entry) it.next();
-                        if (pair.getKey().equals(boton.getName())) {
+                        if (pair.getKey().equals(boton.getName()+"T")) {
                             controlador.setFinTramas((int) pair.getValue());
                             controlador.getLineaBoton().remove(pair.getKey());
                             it.remove(); // avoids a ConcurrentModificationException
@@ -957,7 +953,7 @@ public class botones extends javax.swing.JPanel {
                          y como valor el número de línea asociado a ese botón, de tal forma que cuando se pulse se crea un nuevo par
                          y al despulsarse se elimina, teniendo siempre acceso a que línea hay que modificar en función del botón pulsado
                          Queda ver donde va mejor este mapa, en principio la idea es en controlador*/
-                    controlador.getLineaBoton().put(boton.getName(), controlador.getNumLineaSecuencias());
+                    controlador.getLineaBoton().put(boton.getName()+"S", controlador.getNumLineaSecuencias());
                     controlador.addRowSecuencias(new Object[]{controlador.getNumLineaSecuencias(), comp[pos + 0].getName(), controlador.getTime()});
                     controlador.incrementaNumLineaSecuencias();
 
@@ -987,7 +983,7 @@ public class botones extends javax.swing.JPanel {
                     Iterator it = controlador.getLineaBoton().entrySet().iterator();
                     while (it.hasNext()) {
                         Map.Entry pair = (Map.Entry) it.next();
-                        if (pair.getKey().equals(boton.getName())) {
+                        if (pair.getKey().equals(boton.getName()+"S")) {
                             controlador.setFinSecuencias((int) pair.getValue());
                             controlador.getLineaBoton().remove(pair.getKey());
                             it.remove(); // avoids a ConcurrentModificationException
@@ -1027,7 +1023,7 @@ public class botones extends javax.swing.JPanel {
                          y como valor el número de línea asociado a ese botón, de tal forma que cuando se pulse se crea un nuevo par
                          y al despulsarse se elimina, teniendo siempre acceso a que línea hay que modificar en función del botón pulsado
                          Queda ver donde va mejor este mapa, en principio la idea es en controlador*/
-                    controlador.getLineaBoton().put(boton.getName(), controlador.getNumLineaEscenas());
+                    controlador.getLineaBoton().put(boton.getName()+"Cumbion", controlador.getNumLineaEscenas());
                     controlador.addRowEscenas(new Object[]{controlador.getNumLineaEscenas(), comp[pos + 0].getName(), controlador.getTime()});
                     controlador.incrementaNumLineaEscenas();
 
@@ -1044,7 +1040,7 @@ public class botones extends javax.swing.JPanel {
                     Iterator it = controlador.getLineaBoton().entrySet().iterator();
                     while (it.hasNext()) {
                         Map.Entry pair = (Map.Entry) it.next();
-                        if (pair.getKey().equals(boton.getName())) {
+                        if (pair.getKey().equals(boton.getName()+"Cumbion")) {
                             controlador.setFinEscenas((int) pair.getValue());
                             controlador.getLineaBoton().remove(pair.getKey());
                             it.remove(); // avoids a ConcurrentModificationException
